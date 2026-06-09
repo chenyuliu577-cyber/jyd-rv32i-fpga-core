@@ -14,6 +14,8 @@ Run it from a Vivado Tcl shell or with a Vivado command-line installation availa
 
 The script creates local build output under `build/vivado`. This directory is ignored by `.gitignore`; remove it before running the clean repository check if generated logs or build products remain on disk.
 
+Vivado may warn when the repository is checked out under a long Windows path. If IP or file lookup issues appear, use a shorter checkout path or a drive mapping.
+
 ## Files Added by the Script
 
 - RTL from `rtl/`.
@@ -32,7 +34,17 @@ The checked-in XCI files are copied from the working project after checking for 
 
 The repository does not include memory initialization files. Add authorized memory files under `mem/`, then update the IROM and DRAM IP configuration in Vivado as needed.
 
+When memory files are absent, Vivado 2023.2 may report skipped external `irom.coe` and `dram.coe` files during IROM/DRAM import. This is expected for the public cleanup and should be resolved only by adding authorized memory files or documenting a memory-generation workflow.
+
 If imported XCI files do not regenerate cleanly, replace the import step with explicit IP creation Tcl and document all parameters.
+
+The default reconstruction script imports only the IPs that are instantiated by the copied RTL:
+
+- `IROM`
+- `DRAM`
+- `pll`
+
+The repository also keeps `pll_1`, `counter_0`, and `counter_1` XCI files for audit and future review. They are not imported by default because the current RTL search found no instantiation of those IP module names. In Vivado 2023.2, `pll_1/pll.xci` conflicts with the existing IP name `pll`, and `counter_0`/`counter_1` reference a custom `counter (1.0)` IP definition that is not available in the standard Vivado catalog.
 
 ## PLL
 

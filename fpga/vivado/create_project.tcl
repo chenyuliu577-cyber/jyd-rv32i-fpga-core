@@ -65,14 +65,31 @@ set ip_files [list \
   fpga/ip/IROM/IROM.xci \
   fpga/ip/DRAM/DRAM.xci \
   fpga/ip/pll/pll.xci \
-  fpga/ip/pll_1/pll.xci \
-  fpga/ip/counter_0/counter_0.xci \
-  fpga/ip/counter_1/counter_1.xci \
 ]
 
 foreach f $ip_files {
-  add_files -norecurse [file join $repo_root $f]
+  import_ip -files [file join $repo_root $f]
 }
+
+foreach f [list fpga/imports/test_src/irom.coe fpga/imports/test_src/dram.coe] {
+  if {![file exists [file join $repo_root $f]]} {
+    puts "NOTE: Memory initialization file is not present: $f"
+    puts "NOTE: This is expected for the public cleanup until redistribution rights are confirmed."
+  }
+}
+
+# The repository also preserves the following XCI files for audit purposes:
+#   fpga/ip/pll_1/pll.xci
+#   fpga/ip/counter_0/counter_0.xci
+#   fpga/ip/counter_1/counter_1.xci
+#
+# They are not imported by default because the copied RTL currently instantiates
+# `pll`, `IROM`, and `DRAM`, but does not instantiate `pll_1`, `counter_0`, or
+# `counter_1`. In Vivado 2023.2, importing `pll_1/pll.xci` conflicts with the
+# existing IP name `pll`, and the `counter_*` XCI files reference a custom IP
+# definition named `counter (1.0)` that is not present in the standard catalog.
+# If those IPs are later confirmed necessary, add their IP repositories or
+# replace them with explicit Tcl generation steps.
 
 set_property top top [current_fileset]
 set_property top tb_top [get_filesets sim_1]
@@ -91,4 +108,4 @@ update_compile_order -fileset sim_1
 puts "Created Vivado project at $build_dir"
 puts "Top module: top"
 puts "Simulation top: tb_top"
-
+puts "Imported default IP: IROM, DRAM, pll"

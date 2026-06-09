@@ -79,10 +79,15 @@ Prerequisites:
 - Vivado installed and available from Vivado Tcl shell or command line.
 - FPGA part support for `xc7k325tffg900-2`.
 - User-provided memory initialization files when running program-dependent simulation or implementation.
+- A reasonably short local checkout path is recommended because Vivado warns on long Windows paths.
 
 If an IP cannot regenerate in a fresh Vivado installation, update the Tcl script with explicit IP creation commands and document the required parameters. Do not commit generated IP output directories.
 
 The script creates local build output under `build/vivado`. This directory is ignored and should not be committed.
+
+The script currently imports the IPs instantiated by the copied RTL: `IROM`, `DRAM`, and `pll`. Additional copied XCI files under `fpga/ip/` are retained for audit but are not imported by default unless their need and IP repository requirements are confirmed.
+
+When memory initialization files are not present, Vivado may report skipped external `irom.coe` and `dram.coe` files while importing IROM/DRAM IP. This is expected until authorized memory files are supplied.
 
 ## Simulation
 
