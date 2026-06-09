@@ -1,0 +1,53 @@
+# Vivado / Xilinx generated
+.Xil/
+*.jou
+*.log
+*.str
+*.pb
+*.dcp
+*.rpt
+*.rpx
+*.bit
+*.bin
+*.ltx
+*.hwdef
+*.hdf
+*.xsa
+*.wdb
+*.wcfg
+*.sim/
+*.runs/
+*.cache/
+*.gen/
+*.hw/
+*.ip_user_files/
+xsim.dir/
+webtalk*
+vivado_pid*.str
+vivado_*.backup.*
+
+# Simulation
+*.vcd
+*.fst
+*.wlf
+*.ucdb
+transcript
+work/
+obj_dir/
+
+# Crash dumps
+hs_err_pid*
+*.dmp
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
