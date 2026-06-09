@@ -74,7 +74,15 @@ source fpga/vivado/create_project.tcl
 
 The recommended entry point is `fpga/vivado/create_project.tcl`. It uses relative paths, adds RTL, testbench files, XDC constraints, and the checked-in XCI files, then sets `top` as the synthesis top and `tb_top` as the simulation top.
 
+Prerequisites:
+
+- Vivado installed and available from Vivado Tcl shell or command line.
+- FPGA part support for `xc7k325tffg900-2`.
+- User-provided memory initialization files when running program-dependent simulation or implementation.
+
 If an IP cannot regenerate in a fresh Vivado installation, update the Tcl script with explicit IP creation commands and document the required parameters. Do not commit generated IP output directories.
+
+The script creates local build output under `build/vivado`. This directory is ignored and should not be committed.
 
 ## Simulation
 
@@ -140,4 +148,3 @@ Contributions should include clear verification evidence and must not target fix
 The repository uses the MIT License for files confirmed as original project work. Contest-provided materials, generated Vivado files, memory initialization programs, and third-party code are excluded unless redistribution rights are confirmed.
 
 See `THIRD_PARTY_NOTICES.md` for current licensing cautions and files requiring human confirmation.
-

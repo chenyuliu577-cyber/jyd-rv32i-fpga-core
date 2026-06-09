@@ -10,6 +10,10 @@ source fpga/vivado/create_project.tcl
 
 The script uses paths relative to the repository root. It does not depend on the original working directory.
 
+Run it from a Vivado Tcl shell or with a Vivado command-line installation available in PATH. A plain PowerShell session without Vivado cannot execute the project creation flow.
+
+The script creates local build output under `build/vivado`. This directory is ignored by `.gitignore`; remove it before running the clean repository check if generated logs or build products remain on disk.
+
 ## Files Added by the Script
 
 - RTL from `rtl/`.
@@ -56,4 +60,3 @@ Do not commit:
 ## Windows Path Hygiene
 
 Avoid committing files that contain local absolute paths, user names, or machine names. Run `scripts/check_clean_repo.ps1` before staging files.
-

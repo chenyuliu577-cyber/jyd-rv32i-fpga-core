@@ -25,6 +25,7 @@ xsim.dir/
 webtalk*
 vivado_pid*.str
 vivado_*.backup.*
+build/
 
 # Simulation
 *.vcd
@@ -50,4 +51,3 @@ Thumbs.db
 __pycache__/
 *.pyc
 .venv/
-
