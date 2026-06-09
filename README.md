@@ -46,6 +46,7 @@ rtl/common/        small shared helper modules
 tb/                XSim-oriented testbenches
 fpga/constraints/  XDC constraints
 fpga/ip/           Vivado XCI configuration files
+fpga/ip-optional/  copied XCI files retained for audit, not imported by default
 fpga/vivado/       project reconstruction Tcl
 mem/               user-supplied memory initialization files
 docs/              architecture, verification, Vivado, and release notes
@@ -55,6 +56,9 @@ scripts/           repository hygiene scripts
 ## Quick Start
 
 1. Review `mem/README.md` and provide your own memory initialization files.
+   Private memory files must live under `mem/` as `mem/irom.coe`,
+   `mem/dram.coe`, `mem/IROM.mif`, or `mem/DRAM.mif`, and must not be
+   committed.
 2. Run the clean-repository check:
 
 ```powershell
@@ -85,9 +89,9 @@ If an IP cannot regenerate in a fresh Vivado installation, update the Tcl script
 
 The script creates local build output under `build/vivado`. This directory is ignored and should not be committed.
 
-The script currently imports the IPs instantiated by the copied RTL: `IROM`, `DRAM`, and `pll`. Additional copied XCI files under `fpga/ip/` are retained for audit but are not imported by default unless their need and IP repository requirements are confirmed.
+The script currently imports the IPs instantiated by the copied RTL: `IROM`, `DRAM`, and `pll`. Additional copied XCI files under `fpga/ip-optional/` are retained for audit but are not imported by default unless their need and IP repository requirements are confirmed.
 
-When memory initialization files are not present, Vivado may report skipped external `irom.coe` and `dram.coe` files while importing IROM/DRAM IP. This is expected until authorized memory files are supplied.
+When memory initialization files are not present, the reconstruction script reports this as the expected public-repository state. If private files are present under `mem/`, manually confirm that IROM/DRAM IP initialization points to `mem/irom.coe` and `mem/dram.coe` before simulation or bitstream generation.
 
 ## Simulation
 
@@ -123,6 +127,7 @@ No official performance number is included yet.
 - Add at least one reproducible simulation or board verification record.
 - Validate `fpga/vivado/create_project.tcl` on a clean machine.
 - Run `scripts/check_clean_repo.ps1`.
+- Review `docs/packaging.md` before creating a source archive.
 - Confirm XCI/IP regeneration.
 
 ## Maintainer Notes

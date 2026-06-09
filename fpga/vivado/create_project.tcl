@@ -71,17 +71,28 @@ foreach f $ip_files {
   import_ip -files [file join $repo_root $f]
 }
 
-foreach f [list fpga/imports/test_src/irom.coe fpga/imports/test_src/dram.coe] {
-  if {![file exists [file join $repo_root $f]]} {
-    puts "NOTE: Memory initialization file is not present: $f"
-    puts "NOTE: This is expected for the public cleanup until redistribution rights are confirmed."
+set local_irom_coe [file join $repo_root mem/irom.coe]
+set local_dram_coe [file join $repo_root mem/dram.coe]
+
+if {[file exists $local_irom_coe] && [file exists $local_dram_coe]} {
+  puts "NOTE: Local private memory initialization files were found under mem/."
+  puts "NOTE: Expected files: mem/irom.coe and mem/dram.coe."
+  puts "NOTE: Confirm the imported IROM/DRAM IP configuration points to these files before simulation or bitstream generation."
+} else {
+  puts "NOTE: mem/irom.coe and/or mem/dram.coe are not present."
+  puts "NOTE: This is the expected public-repository state; private memory initialization files are not redistributed."
+}
+
+foreach f [list mem/IROM.mif mem/DRAM.mif] {
+  if {[file exists [file join $repo_root $f]]} {
+    puts "NOTE: Local MIF file is present for private verification: $f"
   }
 }
 
 # The repository also preserves the following XCI files for audit purposes:
-#   fpga/ip/pll_1/pll.xci
-#   fpga/ip/counter_0/counter_0.xci
-#   fpga/ip/counter_1/counter_1.xci
+#   fpga/ip-optional/pll_1/pll.xci
+#   fpga/ip-optional/counter_0/counter_0.xci
+#   fpga/ip-optional/counter_1/counter_1.xci
 #
 # They are not imported by default because the copied RTL currently instantiates
 # `pll`, `IROM`, and `DRAM`, but does not instantiate `pll_1`, `counter_0`, or
@@ -97,10 +108,15 @@ update_compile_order -fileset sources_1
 update_compile_order -fileset sim_1
 
 # Memory initialization note:
-# This repository intentionally does not include IROM.mif, DRAM.mif, irom.coe,
-# or dram.coe because their redistribution rights must be confirmed first.
-# Place your own files under mem/ and update the IROM/DRAM IP configuration in
-# Vivado if the imported XCI files still reference missing initialization data.
+# This repository intentionally does not include mem/IROM.mif, mem/DRAM.mif,
+# mem/irom.coe, or mem/dram.coe because their redistribution rights must be
+# confirmed first. Place private files under mem/ only; do not use
+# fpga/imports/test_src/ for this cleanup.
+#
+# The current script checks for mem/irom.coe and mem/dram.coe, but does not
+# claim to rewrite the imported IROM/DRAM IP initialization properties
+# automatically. After project reconstruction, manually confirm the IP
+# initialization paths in Vivado before simulation or bitstream generation.
 #
 # TODO: If the XCI files cannot regenerate cleanly in a fresh Vivado install,
 # replace them with explicit Tcl IP creation commands and documented parameters.

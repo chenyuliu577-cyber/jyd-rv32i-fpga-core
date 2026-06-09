@@ -8,9 +8,10 @@
 - Board:
 - Clock frequency:
 - Commit hash:
-- Memory image source:
-- IROM file:
-- DRAM file:
+- Memory image source: private / contest-provided / self-generated
+- IROM file location:
+- DRAM file location:
+- Memory files committed to Git: no
 
 ## Test Type
 
@@ -25,6 +26,7 @@
 - Observed pass count:
 - SEG display:
 - LED display:
+- Private memory files redistributed: no
 - Log file:
 - Screenshot/waveform:
 
@@ -46,3 +48,5 @@
 - [ ] Fail
 - [ ] Partial
 
+Do not mark a 37/37 result unless the evidence was actually observed. This
+template must not be used to fabricate verification results.

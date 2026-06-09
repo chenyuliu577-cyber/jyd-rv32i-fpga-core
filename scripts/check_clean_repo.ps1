@@ -37,7 +37,8 @@ foreach ($dir in $forbiddenDirs) {
 
 $forbiddenFilePatterns = @(
     "*.log", "*.jou", "*.dmp", "*.dcp", "*.bit", "*.rpt", "*.wdb",
-    "*.str", "*.pb", "*.rpx", "*.wcfg", "*.vcd", "*.fst", "hs_err_pid*"
+    "*.str", "*.pb", "*.rpx", "*.wcfg", "*.vcd", "*.fst", "hs_err_pid*",
+    "*.coe", "*.mif", "IROM.mif", "DRAM.mif", "irom.coe", "dram.coe"
 )
 
 foreach ($pattern in $forbiddenFilePatterns) {
@@ -87,4 +88,3 @@ if ($failed) {
 
 Write-Host "PASS: repository is clean"
 exit 0
-

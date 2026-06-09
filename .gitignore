@@ -36,6 +36,13 @@ transcript
 work/
 obj_dir/
 
+# Private memory initialization files
+mem/*.coe
+mem/*.mif
+*.coe
+*.mif
+!mem/README.md
+
 # Crash dumps
 hs_err_pid*
 *.dmp

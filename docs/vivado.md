@@ -21,7 +21,7 @@ Vivado may warn when the repository is checked out under a long Windows path. If
 - RTL from `rtl/`.
 - Testbench files from `tb/`.
 - Constraints from `fpga/constraints/digital_twin.xdc`.
-- XCI files from `fpga/ip/`.
+- Default XCI files from `fpga/ip/`.
 
 ## Top Modules
 
@@ -32,9 +32,16 @@ Vivado may warn when the repository is checked out under a long Windows path. If
 
 The checked-in XCI files are copied from the working project after checking for local path strings. They may still require manual validation in a fresh Vivado environment.
 
-The repository does not include memory initialization files. Add authorized memory files under `mem/`, then update the IROM and DRAM IP configuration in Vivado as needed.
+The repository does not include memory initialization files. Add authorized private memory files only under `mem/`:
 
-When memory files are absent, Vivado 2023.2 may report skipped external `irom.coe` and `dram.coe` files during IROM/DRAM import. This is expected for the public cleanup and should be resolved only by adding authorized memory files or documenting a memory-generation workflow.
+- `mem/irom.coe`
+- `mem/dram.coe`
+- `mem/IROM.mif`
+- `mem/DRAM.mif`
+
+Do not place private memory files under `fpga/imports/test_src/`, and do not commit `.coe` or `.mif` files.
+
+When memory files are absent, the reconstruction script reports this as the expected public-repository state. When `mem/irom.coe` and `mem/dram.coe` are present, it reports that local private memory files were found. The script does not currently claim to rewrite IROM/DRAM IP initialization properties automatically; confirm the IP paths manually in Vivado before simulation or bitstream generation.
 
 If imported XCI files do not regenerate cleanly, replace the import step with explicit IP creation Tcl and document all parameters.
 
@@ -44,7 +51,7 @@ The default reconstruction script imports only the IPs that are instantiated by 
 - `DRAM`
 - `pll`
 
-The repository also keeps `pll_1`, `counter_0`, and `counter_1` XCI files for audit and future review. They are not imported by default because the current RTL search found no instantiation of those IP module names. In Vivado 2023.2, `pll_1/pll.xci` conflicts with the existing IP name `pll`, and `counter_0`/`counter_1` reference a custom `counter (1.0)` IP definition that is not available in the standard Vivado catalog.
+The repository also keeps `pll_1`, `counter_0`, and `counter_1` XCI files under `fpga/ip-optional/` for audit and future review. They are not imported by default because the current RTL search found no instantiation of those IP module names. In Vivado 2023.2, `pll_1/pll.xci` conflicts with the existing IP name `pll`, and `counter_0`/`counter_1` reference a custom `counter (1.0)` IP definition that is not available in the standard Vivado catalog.
 
 ## PLL
 

@@ -18,12 +18,14 @@ Do not commit the repository if this check fails.
 
 ## 2. Provide Memory Files
 
-This cleanup intentionally excludes memory initialization files. Add your own authorized files under `mem/`:
+This cleanup intentionally excludes memory initialization files. Add your own authorized files only under `mem/`:
 
-- `IROM.mif`
-- `DRAM.mif`
-- `irom.coe`
-- `dram.coe`
+- `mem/irom.coe`
+- `mem/dram.coe`
+- `mem/IROM.mif`
+- `mem/DRAM.mif`
+
+Do not place private memory files under `fpga/imports/test_src/`, and do not commit `.coe` or `.mif` files.
 
 Then update the Vivado IROM/DRAM IP settings if required.
 
@@ -44,4 +46,3 @@ Use XSim through Vivado after the project is created. Start with `tb_top` for th
 ## 5. Verify
 
 Record verification evidence before claiming pass counts or performance numbers. See `docs/verification.md`.
-

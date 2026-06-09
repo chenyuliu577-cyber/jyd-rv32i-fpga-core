@@ -2,6 +2,35 @@
 
 This repository does not yet include a reproducible verification report. The plan below defines how verification evidence should be collected.
 
+## Private Memory Verification Workflow
+
+Private memory initialization files are allowed only for local verification and
+must not be committed.
+
+1. Place authorized local memory files under `mem/`:
+   - `mem/irom.coe`
+   - `mem/dram.coe`
+   - or `mem/IROM.mif`
+   - or `mem/DRAM.mif`
+2. Recreate the Vivado project with `fpga/vivado/create_project.tcl`.
+3. Manually or automatically confirm that the IROM and DRAM IP configuration
+   uses the local files under `mem/`.
+4. Run XSim or board verification.
+5. Record:
+   - Vivado version
+   - commit hash
+   - memory file source: private, contest-provided, or self-generated
+   - confirmation that memory files were not committed
+   - RV32I pass count
+   - SEG display
+   - LED display
+   - performance counter result, if applicable
+6. Commit only a verification summary. Do not commit unauthorized memory files,
+   complete raw logs, bitstreams, or generated Vivado outputs.
+
+Use `docs/verification-record-template.md` or a dated template under
+`docs/verification-records/` when preparing evidence.
+
 ## RV32I 37-Instruction Verification
 
 A valid instruction-test report should include:
@@ -80,4 +109,3 @@ Coverage is limited. It should not be described as full verification.
 - Random branch target alignment tests.
 
 Random tests should use a reference model or signature comparison. A random run without an oracle is not meaningful verification.
-

@@ -27,7 +27,14 @@ update_compile_order -fileset sim_1
 
 ## Memory Initialization
 
-The cleanup excludes `IROM.mif`, `DRAM.mif`, `irom.coe`, and `dram.coe`. Add authorized files under `mem/` and update the IROM/DRAM IP configuration before running tests that depend on program memory.
+The cleanup excludes private memory initialization files. Add authorized files only under `mem/`:
+
+- `mem/irom.coe`
+- `mem/dram.coe`
+- `mem/IROM.mif`
+- `mem/DRAM.mif`
+
+Before running tests that depend on program memory, recreate the Vivado project and manually confirm that the IROM/DRAM IP configuration uses the local files under `mem/`. Do not commit `.coe` or `.mif` files.
 
 ## Waveforms
 
@@ -46,4 +53,3 @@ Do not commit:
 - `xsim.dir/`
 - `*.vcd`
 - `*.fst`
-
