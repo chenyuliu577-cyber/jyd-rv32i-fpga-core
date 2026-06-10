@@ -29,4 +29,3 @@ Any future performance report must include:
 - SEG and LED observations.
 
 Do not publish temporary test results as final performance. Do not optimize specifically for fixed IROM contents or a fixed benchmark while presenting it as a general optimization.
-

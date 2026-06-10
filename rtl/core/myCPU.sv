@@ -6,8 +6,8 @@ module myCPU (
     output[31:0] perip_wdata, input  [31:0] perip_rdata
 );
     logic IFU_valid; logic[31:0] IFU_pc, IFU_snpc, IFU_inst;
-    logic IF_ID_stall, IF_ID_flush; logic [31:0] IDU_pc, IDU_inst; 
-    
+    logic IF_ID_stall, IF_ID_flush; logic [31:0] IDU_pc, IDU_inst;
+
     logic bpu_pred_taken_if, bpu_pred_taken_id;
     logic [31:0] bpu_pred_target_if, bpu_pred_target_id;
     logic bpu_update_en, bpu_actual_taken;
@@ -41,7 +41,7 @@ module myCPU (
 
     logic LSU_jump_flag, LSU_R_wen, LSU_mem_ren, LSU_ready;
     logic[31:0] LSU_Rdata, LSU_Ex_result, LSU_rd_value, LSU_pc;
-    logic [3:0] LSU_csr_wen; logic [4:0] LSU_rd; 
+    logic [3:0] LSU_csr_wen; logic [4:0] LSU_rd;
 
     logic[31:0] WBU_pc, WBU_rd_value, WBU_csrd;
     logic [ 4:0] WBU_rd; logic WBU_R_wen; logic [ 3:0] WBU_csr_wen;
@@ -58,7 +58,7 @@ module myCPU (
         .irom_data(irom_data), .ready (IDU_ready), .valid (IFU_valid),
         .bpu_pred_taken(bpu_pred_taken_if), .bpu_pred_target(bpu_pred_target_if)
     );
-    
+
     IF_ID_Reg IF_ID_Reg_inst (
         .clock(cpu_clk), .reset(cpu_rst), .flush(IF_ID_flush), .stall(IF_ID_stall),
         .if_pc(IFU_pc), .if_inst(IFU_inst), .if_pred_taken(bpu_pred_taken_if), .if_pred_target(bpu_pred_target_if),
@@ -79,7 +79,7 @@ module myCPU (
         .EXU_rs1_in (EXU_rs1_in), .EXU_rs2_in (EXU_rs2_in),
         .dnpc (dnpc), .icache_clr (icache_clr), .EXU_inst_clear (EXU_inst_clear), .dnpc_flag (dnpc_flag)
     );
-    
+
     IDU IDU_Inst0 (
         .clock (cpu_clk), .reset (cpu_rst), .snpc (IDU_pc + 4), .inst (IDU_inst), .pc (IDU_pc),
         .rd_value (WBU_rd_value), .csrd (WBU_csrd), .rd (WBU_rd), .R_wen (WBU_R_wen), .csr_wen (WBU_csr_wen),
@@ -158,7 +158,7 @@ module myCPU (
     );
 
     logic real_bpu_update;
-    assign real_bpu_update = bpu_update_en & ~IF_ID_stall; 
+    assign real_bpu_update = bpu_update_en & ~IF_ID_stall;
     Branch_Predictor BPU_inst (
         .clk(cpu_clk), .rst(cpu_rst), .if_pc(IFU_pc),
         .pred_taken(bpu_pred_taken_if), .pred_target(bpu_pred_target_if),

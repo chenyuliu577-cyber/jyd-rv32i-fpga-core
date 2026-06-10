@@ -1,22 +1,22 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
+// Company:
+// Engineer:
+//
 // Create Date: 04/16/2025 06:04:59 PM
-// Design Name: 
+// Design Name:
 // Module Name: twin_controller
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
+// Project Name:
+// Target Devices:
+// Tool Versions:
+// Description:
+//
+// Dependencies:
+//
 // Revision:
 // Revision 0.01 - File Created
 // Additional Comments:
-// 
+//
 //////////////////////////////////////////////////////////////////////////////////
 
 
@@ -77,8 +77,8 @@ module twin_controller(
             end
             SEND: begin
                 if(~tx_busy) begin
-                    tx_data_next = status_buffer[send_cnt];  
-                    tx_start_next = 1;                      
+                    tx_data_next = status_buffer[send_cnt];
+                    tx_start_next = 1;
                     if (send_cnt == 17)
                         next_state = IDLE;
                 end
@@ -166,4 +166,3 @@ module twin_controller(
     end
 
 endmodule
-

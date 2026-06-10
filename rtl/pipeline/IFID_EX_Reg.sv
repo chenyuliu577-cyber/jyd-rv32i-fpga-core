@@ -34,7 +34,7 @@ module IFID_EX_Reg(
         if(reset) begin
             mem_ren_reg <= 0; csr_wen_reg <= 0; R_wen_reg <= 0; mem_wen_reg <= 0; jump_flag_reg <= 0; branch_flag_reg <= 0; fetch_i_reg <= 0;
         end else if(ready_next) begin
-            if (!valid_last || EXU_inst_clr) begin 
+            if (!valid_last || EXU_inst_clr) begin
                 mem_ren_reg <= 0; csr_wen_reg <= 0; R_wen_reg <= 0; mem_wen_reg <= 0; jump_flag_reg <= 0; branch_flag_reg <= 0; fetch_i_reg <= 0;
             end else begin
                 mem_ren_reg <= mem_ren; csr_wen_reg <= csr_wen; R_wen_reg <= R_wen; mem_wen_reg <= mem_wen; jump_flag_reg <= jump_flag; branch_flag_reg <= branch_flag; fetch_i_reg <= fetch_i_flag;

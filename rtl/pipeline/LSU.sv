@@ -31,7 +31,7 @@ module LSU(
         case (funct3_reg)
             3'b000: rdata_ex = rdata_8i;
             3'b001: rdata_ex = rdata_16i;
-            3'b010: rdata_ex = rdata;       
+            3'b010: rdata_ex = rdata;
             3'b100: rdata_ex = rdata_8u;
             3'b101: rdata_ex = rdata_16u;
             default: rdata_ex = 32'b0;

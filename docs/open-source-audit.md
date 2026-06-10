@@ -28,4 +28,3 @@ The original working directory contained a valid Vivado/SystemVerilog project mi
 ## Current Public-Readiness Status
 
 The repository is suitable for local cleanup review. It should not be described as mature or fully verified until public verification artifacts and licensing review are complete.
-

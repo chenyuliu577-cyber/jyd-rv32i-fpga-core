@@ -1,22 +1,22 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
+// Company:
+// Engineer:
+//
 // Create Date: 2025/04/22 10:25:24
-// Design Name: 
+// Design Name:
 // Module Name: perip_bridge
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
+// Project Name:
+// Target Devices:
+// Tool Versions:
+// Description:
+//
+// Dependencies:
+//
 // Revision:
 // Revision 0.01 - File Created
 // Additional Comments:
-// 
+//
 //////////////////////////////////////////////////////////////////////////////////
 
 module perip_bridge(
@@ -31,7 +31,7 @@ module perip_bridge(
     output logic [31:0]  perip_rdata		,
 
     input  logic [63:0]  virtual_sw_input	,
-    input  logic [7:0]   virtual_key_input	,	
+    input  logic [7:0]   virtual_key_input	,
 
 	output logic [39:0]  virtual_seg_output	,
     output logic [31:0]  virtual_led_output
@@ -99,13 +99,13 @@ module perip_bridge(
         .seg3   (seg_output[26:20]),
         .seg4   (seg_output[36:30]),
         .ans    ({seg_output[39:38], seg_output[29:28], seg_output[19:18], seg_output[9:8]})
-    ); 
-   
+    );
+
     assign seg_output[7]  = 0;
     assign seg_output[17] = 0;
     assign seg_output[27] = 0;
     assign seg_output[37] = 0;
-    
+
 
     // dram rw
     dram_driver dram_driver_inst (
@@ -132,7 +132,7 @@ module perip_bridge(
                         {32{perip_addr == SEG_ADDR}} & mmio_rdata |
                         {32{perip_addr >= DRAM_ADDR_START && perip_addr < DRAM_ADDR_END}} & dram_rdata |
                         {32{perip_addr == CNT_ADDR}} & cnt_rdata;
-    
+
     assign virtual_led_output = LED;
     assign virtual_seg_output = seg_output;
 

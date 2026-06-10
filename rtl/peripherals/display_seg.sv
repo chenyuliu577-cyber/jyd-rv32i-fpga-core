@@ -1,22 +1,22 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
+// Company:
+// Engineer:
+//
 // Create Date: 2023/09/22 13:41:36
-// Design Name: 
+// Design Name:
 // Module Name: display
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
+// Project Name:
+// Target Devices:
+// Tool Versions:
+// Description:
+//
+// Dependencies:
+//
 // Revision:
 // Revision 0.01 - File Created
 // Additional Comments:
-// 
+//
 //////////////////////////////////////////////////////////////////////////////////
 
 
@@ -31,15 +31,15 @@ module display_seg (
     output logic [7:0]    ans
 );
     logic  [4:0]   count;
-    logic  [3:0]   digit1, digit2, digit3, digit4; 
+    logic  [3:0]   digit1, digit2, digit3, digit4;
 
     always@(posedge clk or posedge rst) begin
-        if(rst)  
+        if(rst)
             count <= 0;
-        else 
+        else
             count <= count + 1;
     end
-       
+
     always @(*)
     case(count[4])
         0: begin
@@ -49,7 +49,7 @@ module display_seg (
             digit3 = s[23:20];
             digit4 = s[31:28];
         end
-        
+
         1: begin
             ans = 8'b01010101;
             digit1 = s[3:0];
@@ -59,7 +59,7 @@ module display_seg (
         end
 
     endcase
-    
+
     seg7 SEG1(.din(digit1),.dout(seg1));
     seg7 SEG2(.din(digit2),.dout(seg2));
     seg7 SEG3(.din(digit3),.dout(seg3));

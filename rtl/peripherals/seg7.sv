@@ -1,30 +1,30 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
+// Company:
+// Engineer:
+//
 // Create Date: 2024/04/18 23:26:35
-// Design Name: 
+// Design Name:
 // Module Name: seg7
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
+// Project Name:
+// Target Devices:
+// Tool Versions:
+// Description:
+//
+// Dependencies:
+//
 // Revision:
 // Revision 0.01 - File Created
 // Additional Comments:
-// 
+//
 //////////////////////////////////////////////////////////////////////////////////
 
 
 module seg7(
     input  logic [3:0]      din     ,
-    output logic [6:0]      dout    
+    output logic [6:0]      dout
 );
- 
+
 always_comb begin
     case(din)
         4'h0:dout = 7'b011_1111;
@@ -43,7 +43,7 @@ always_comb begin
         4'hd:dout = 7'h5e;
         4'he:dout = 7'h79;
         4'hf:dout = 7'h71;
-        default:dout = 7'h00;           
+        default:dout = 7'h00;
     endcase
 end
 

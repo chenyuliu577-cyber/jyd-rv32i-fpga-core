@@ -30,4 +30,3 @@ Good first issue.
 - `rtl/core/Control.sv`
 - `rtl/pipeline/IDU.sv`
 - `rtl/core/ALU.sv`
-

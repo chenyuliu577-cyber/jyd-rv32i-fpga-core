@@ -28,4 +28,3 @@ Intermediate.
 - `scripts/`
 - `docs/verification.md`
 - `.gitignore`
-

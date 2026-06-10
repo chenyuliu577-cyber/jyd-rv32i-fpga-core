@@ -29,4 +29,3 @@ Intermediate.
 - `rtl/pipeline/LSU.sv`
 - `rtl/soc/dram_driver.sv`
 - `docs/verification.md`
-

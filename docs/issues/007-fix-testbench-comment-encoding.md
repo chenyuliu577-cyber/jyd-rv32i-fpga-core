@@ -28,4 +28,3 @@ Good first issue.
 - `tb/tb_myCPU.sv`
 - `tb/tb_top.sv`
 - `tb/tb_uart.sv`
-

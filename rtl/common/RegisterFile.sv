@@ -8,11 +8,11 @@ module RegisterFile #(parameter ADDR_WIDTH = 5, parameter DATA_WIDTH = 32) (
     always @(posedge clock) begin
         if (reset) begin
             for (int i = 0; i < 2**ADDR_WIDTH; i++) rf[i] <= 0;
-        end else if (wen && waddr != 0) begin  
+        end else if (wen && waddr != 0) begin
             rf[waddr] <= wdata;
         end
     end
     assign rs1_value = (rs1_addr == 0) ? 0 : ((wen && waddr == rs1_addr) ? wdata : rf[rs1_addr]);
     assign rs2_value = (rs2_addr == 0) ? 0 : ((wen && waddr == rs2_addr) ? wdata : rf[rs2_addr]);
-    assign a0_value = rf[10]; 
+    assign a0_value = rf[10];
 endmodule

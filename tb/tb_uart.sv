@@ -1,22 +1,22 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
+// Company:
+// Engineer:
+//
 // Create Date: 04/16/2025 05:32:36 PM
-// Design Name: 
+// Design Name:
 // Module Name: tb_uart
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
+// Project Name:
+// Target Devices:
+// Tool Versions:
+// Description:
+//
+// Dependencies:
+//
 // Revision:
 // Revision 0.01 - File Created
 // Additional Comments:
-// 
+//
 //////////////////////////////////////////////////////////////////////////////////
 
 
@@ -102,7 +102,7 @@ module tb_uart;
 
     // send "helloworld"
     task send_hello_world;
-        reg [7:0] message[0:9]; 
+        reg [7:0] message[0:9];
         integer i;
         begin
             // "helloworld"
@@ -121,14 +121,13 @@ module tb_uart;
                 wait(!tx_busy);
                 tx_data = message[i];
                 tx_start = 1;
-              
-                wait(tx_busy == 1'b1); // handshake    
+
+                wait(tx_busy == 1'b1); // handshake
                 tx_start = 0;
-                
+
                 wait(tx_busy == 1'b0);
             end
         end
     endtask
 
 endmodule
-

@@ -45,7 +45,7 @@ module IDU(
             endcase
         end else idu_branch_taken = 1'b0;
     end
-    assign branch_flag = idu_branch_taken; 
+    assign branch_flag = idu_branch_taken;
 
     logic [31:0] branch_pc_add, branch_rs1_add;
     assign branch_pc_add = pc + imm;
@@ -108,7 +108,7 @@ module IDU(
     assign bpu_actual_target = branch_pc;
 
     assign IDU_mispredict = (is_branch_inst | is_jump_inst) & (
-        (bpu_actual_taken != pred_taken_in) | 
+        (bpu_actual_taken != pred_taken_in) |
         (bpu_actual_taken & pred_taken_in & (bpu_actual_target != pred_target_in))
     );
     assign IDU_recover_pc = bpu_actual_taken ? bpu_actual_target : (pc + 4);

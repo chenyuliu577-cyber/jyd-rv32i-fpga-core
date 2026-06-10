@@ -7,7 +7,7 @@
 `define lw 7'b0000011                          //lw
 `define addi 7'b0010011                          //addi
 `define jarl 7'b1100111                          //jalr
-`define S_opcode  7'b0100011 
+`define S_opcode  7'b0100011
 `define B_opcode  7'b1100011
 `define lui 7'b0110111                          //lui
 `define auipc 7'b0010111                          //auipc

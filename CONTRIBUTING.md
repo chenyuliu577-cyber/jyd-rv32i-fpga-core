@@ -37,4 +37,3 @@ RTL changes should:
 - No local absolute paths or machine identifiers.
 - Tests or verification steps are documented.
 - Performance changes include measurement conditions.
-

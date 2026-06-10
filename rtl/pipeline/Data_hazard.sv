@@ -2,7 +2,7 @@
 module Data_hazard(
     input [4:0] IDU_rs1, input[4:0] IDU_rs2,
     input [4:0] EXU_rd, input EXU_R_Wen,
-    input [4:0] MEM_rd, input MEM_R_Wen, 
+    input [4:0] MEM_rd, input MEM_R_Wen,
     output [1:0] IDU_rs1_choice, output [1:0] IDU_rs2_choice
 );
     logic exu_rs1_match, exu_rs2_match, mem_rs1_match, mem_rs2_match;

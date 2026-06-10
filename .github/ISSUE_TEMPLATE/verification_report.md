@@ -38,4 +38,3 @@ Summarize important messages. Do not paste long generated logs.
 ## Attachments
 
 Optional screenshots or waveform snippets. Confirm they contain no private paths or unauthorized contest material.
-

@@ -7,8 +7,8 @@ module ALU #(parameter BW = 32) (
     logic          is_sub;
     logic[BW-1:0] add_sub_res;
     logic          is_eq, is_slt, is_sltu;
-    
-    assign is_sub = (choice == `alu_sub) || (choice == `alu_signed_comparator) || 
+
+    assign is_sub = (choice == `alu_sub) || (choice == `alu_signed_comparator) ||
                     (choice == `alu_unsigned_comparator) || (choice == `alu_equal);
     assign add_sub_res = d1 + (is_sub ? ~d2 : d2) + { {(BW-1){1'b0}}, is_sub };
 
@@ -17,7 +17,7 @@ module ALU #(parameter BW = 32) (
     assign is_sltu = (d1[BW-1] == d2[BW-1]) ? add_sub_res[BW-1] : d2[BW-1];
 
     always_comb begin
-        result = {BW{1'b0}}; 
+        result = {BW{1'b0}};
         case(choice)
             `alu_add, `alu_sub:       result = add_sub_res;
             `alu_and:                 result = d1 & d2;

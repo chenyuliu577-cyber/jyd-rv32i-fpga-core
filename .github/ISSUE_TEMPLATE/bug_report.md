@@ -35,4 +35,3 @@ What happened?
 ## Notes
 
 Attach concise logs or screenshots only if they do not contain private paths or generated build artifacts.
-

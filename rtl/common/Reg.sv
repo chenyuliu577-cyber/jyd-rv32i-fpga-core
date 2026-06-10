@@ -4,13 +4,12 @@ module Reg #(WIDTH = 1, RESET_VAL = 0) (
     input reset,
     input [WIDTH-1: 0]din,
     output logic [WIDTH-1: 0]dout,
-    input wen                         
+    input wen
 );
 always @(posedge clock) begin
-    if (reset) 
+    if (reset)
         dout <= RESET_VAL;
-    else if (wen) 
+    else if (wen)
         dout <= din;
     end
 endmodule
-

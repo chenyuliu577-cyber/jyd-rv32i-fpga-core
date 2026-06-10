@@ -20,7 +20,7 @@ module EXU (
     assign branch_pc_next = branch_pc_reg;
 
     ALU #(.BW(32)) ALU_i0 (.d1(add1_reg), .d2(add2_reg), .choice(alu_opcode_reg), .result(alu_result));
-    
+
     logic[31:0] alu_final;
     assign alu_final = alu_result ^ {31'd0, inv_flag_reg};
     assign Ex_result = (jump_flag_reg | (|csr_wen_reg)) ? rd_value_reg : alu_final;

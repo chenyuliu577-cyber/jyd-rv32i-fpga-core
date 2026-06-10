@@ -23,7 +23,7 @@ module EX_LSWB_Reg (
         if (reset) begin
             mem_ren_reg <= 0; mem_wen_reg <= 0; R_wen_reg <= 0; csr_wen_reg <= 0; jump_flag_reg <= 0;
         end else if (ready_next) begin
-            if (!valid_last) begin 
+            if (!valid_last) begin
                 mem_ren_reg <= 0; mem_wen_reg <= 0; R_wen_reg <= 0; csr_wen_reg <= 0; jump_flag_reg <= 0;
             end else begin
                 mem_ren_reg <= mem_ren; mem_wen_reg <= mem_wen; R_wen_reg <= R_wen; csr_wen_reg <= csr_wen; jump_flag_reg <= jump_flag;

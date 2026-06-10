@@ -1,22 +1,22 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
+// Company:
+// Engineer:
+//
 // Create Date: 04/16/2025 05:18:59 PM
-// Design Name: 
+// Design Name:
 // Module Name: uart
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
+// Project Name:
+// Target Devices:
+// Tool Versions:
+// Description:
+//
+// Dependencies:
+//
 // Revision:
 // Revision 0.01 - File Created
 // Additional Comments:
-// 
+//
 //////////////////////////////////////////////////////////////////////////////////
 
 module uart #(
@@ -109,7 +109,7 @@ module uart #(
             endcase
         end
     end
-    
+
     // rx_ready delay for half of BAUD_DIV
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin

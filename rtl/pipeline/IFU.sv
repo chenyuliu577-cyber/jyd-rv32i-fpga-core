@@ -2,7 +2,7 @@
 module IFU(
     input clock, input reset, input [31:0] dnpc, input dnpc_flag,
     input [31:0] irom_data, input stall,
-    input bpu_pred_taken, input[31:0] bpu_pred_target, 
+    input bpu_pred_taken, input[31:0] bpu_pred_target,
     output [31:0] snpc, output logic[31:0] pc, output [31:0] inst,
     input ready, output logic valid
 );

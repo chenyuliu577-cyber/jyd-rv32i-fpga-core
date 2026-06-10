@@ -87,4 +87,3 @@ The UART protocol details and host-side tooling are待确认.
 ## Clock and Reset
 
 `top.sv` instantiates a PLL. The original Vivado project used part `xc7k325tffg900-2` and `top` as synthesis top. Default contest CPU clock is expected to be 50 MHz, but the effective PLL output frequency must be confirmed in Vivado IP settings.
-

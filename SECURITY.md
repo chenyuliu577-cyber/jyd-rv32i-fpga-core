@@ -8,4 +8,3 @@ This is an educational FPGA/RTL repository. Security reports are still welcome w
 - Build artifacts that should not be public.
 
 Please open a private report if the hosting platform supports it. Otherwise, open an issue with sensitive details removed and state that private follow-up is needed.
-

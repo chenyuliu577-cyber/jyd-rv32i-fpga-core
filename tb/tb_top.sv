@@ -63,9 +63,9 @@ module tb_top();
     always @(posedge uut.student_top_inst.Core_cpu.cpu_clk) begin
         // 只有 PLL 稳定输出时钟后，才开始监控
         if (uut.w_clk_rst == 1'b1) begin
-            $display("Time=%0t | PC=%h | Inst=%h", 
-                     $time, 
-                     uut.student_top_inst.Core_cpu.IFU_pc, 
+            $display("Time=%0t | PC=%h | Inst=%h",
+                     $time,
+                     uut.student_top_inst.Core_cpu.IFU_pc,
                      uut.student_top_inst.Core_cpu.IDU_inst);
         end
     end

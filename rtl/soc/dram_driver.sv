@@ -1,22 +1,22 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
+// Company:
+// Engineer:
+//
 // Create Date: 04/22/2025 11:42:01 AM
-// Design Name: 
+// Design Name:
 // Module Name: dram_driver
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
+// Project Name:
+// Target Devices:
+// Tool Versions:
+// Description:
+//
+// Dependencies:
+//
 // Revision:
 // Revision 0.01 - File Created
 // Additional Comments:
-// 
+//
 //////////////////////////////////////////////////////////////////////////////////
 
 
@@ -27,7 +27,7 @@ module dram_driver(
     input  logic [31:0]  perip_wdata		,
 	input  logic [1:0]	 perip_mask			,
     input  logic         dram_wen           ,
-    output logic [31:0]  perip_rdata		
+    output logic [31:0]  perip_rdata
 );
     logic [15:0] dram_addr;
     logic [ 1:0] offset;

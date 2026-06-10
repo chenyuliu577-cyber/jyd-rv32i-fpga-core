@@ -36,4 +36,3 @@ MIT licensing applies only to files confirmed as original project work. Contest-
 - CI passed.
 - External adoption.
 - Production readiness.
-

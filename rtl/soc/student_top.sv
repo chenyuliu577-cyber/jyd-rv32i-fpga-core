@@ -1,22 +1,22 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
+// Company:
+// Engineer:
+//
 // Create Date: 04/16/2025 06:21:13 PM
-// Design Name: 
+// Design Name:
 // Module Name: student_top
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
+// Project Name:
+// Target Devices:
+// Tool Versions:
+// Description:
+//
+// Dependencies:
+//
 // Revision:
 // Revision 0.01 - File Created
 // Additional Comments:
-// 
+//
 //////////////////////////////////////////////////////////////////////////////////
 
 
@@ -33,7 +33,7 @@ module student_top#(
     input  [P_SW_CNT  - 1:0]                    virtual_sw    ,
 
     output [P_LED_CNT - 1:0]                    virtual_led   ,
-    output [P_SEG_CNT - 1:0]                    virtual_seg   
+    output [P_SEG_CNT - 1:0]                    virtual_seg
 );
 
     // IROM
@@ -54,22 +54,22 @@ module student_top#(
         .cpu_clk            (w_cpu_clk),
 
         // Interface to IROM
-        .irom_addr          (pc),             
-        .irom_data          (instruction),   
+        .irom_addr          (pc),
+        .irom_data          (instruction),
 
         // Interface to DRAM & periphera
-        .perip_addr         (perip_addr),     
-        .perip_wen          (perip_wen),     
-        .perip_mask         (perip_mask),   
-        .perip_wdata        (perip_wdata),    
-        .perip_rdata        (perip_rdata)     
+        .perip_addr         (perip_addr),
+        .perip_wen          (perip_wen),
+        .perip_mask         (perip_mask),
+        .perip_wdata        (perip_wdata),
+        .perip_rdata        (perip_rdata)
     );
 
     IROM Mem_IROM (
         .a          (inst_addr),
         .spo        (instruction)
     );
-    
+
     perip_bridge bridge_inst (
         .clk				(w_cpu_clk),
         .cnt_clk            (w_clk_50Mhz),
@@ -80,7 +80,7 @@ module student_top#(
         .perip_mask			(perip_mask),
         .perip_rdata		(perip_rdata),
         .virtual_sw_input	(virtual_sw),
-        .virtual_key_input	(virtual_key),	
+        .virtual_key_input	(virtual_key),
         .virtual_seg_output	(virtual_seg),
         .virtual_led_output (virtual_led)
     );

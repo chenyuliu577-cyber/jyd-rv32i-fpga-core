@@ -18,9 +18,9 @@ module MEM_WB_Reg(
             valid_reg <= valid_in;
             mem_rdata_reg <= mem_rdata_in; ex_result_reg <= ex_result_in; rd_value_reg <= rd_value_in;
             rd_reg <= rd_in; pc_reg <= pc_in;
-            
+
             // ? ¾»»¯Âß¼­
-            if (!valid_in) begin 
+            if (!valid_in) begin
                 csr_wen_reg <= 0; r_wen_reg <= 0; mem_ren_reg <= 0; jump_flag_reg <= 0;
             end else begin
                 csr_wen_reg <= csr_wen_in; r_wen_reg <= r_wen_in; mem_ren_reg <= mem_ren_in; jump_flag_reg <= jump_flag_in;

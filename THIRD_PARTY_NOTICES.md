@@ -48,4 +48,3 @@ The following generated outputs are intentionally excluded:
 - Waveforms
 - Crash dumps
 - Large intermediate build files
-

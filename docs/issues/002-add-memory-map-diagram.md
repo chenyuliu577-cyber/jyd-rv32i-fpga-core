@@ -28,4 +28,3 @@ Good first issue.
 - `docs/architecture.md`
 - `docs/competition-spec.md`
 - `rtl/soc/perip_bridge.sv`
-

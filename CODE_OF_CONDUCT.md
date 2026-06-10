@@ -8,4 +8,3 @@ This project is intended for learning and engineering discussion. Contributors a
 - Keep contest, license, and attribution concerns transparent.
 
 Maintainers may remove comments or contributions that are abusive, misleading, or unrelated to the project.
-

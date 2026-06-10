@@ -64,4 +64,3 @@ I would use API credits to improve maintainability and educational quality: revi
 ## Draft: Anything else we should know?
 
 This project is still early as an open-source repository. It may not yet have stars, releases, external users, or CI history. I am intentionally avoiding inflated claims and excluding memory programs or contest materials until redistribution rights are confirmed. The immediate plan is to publish a clean v0.1.0, add verification artifacts, create good first issues, document Vivado reconstruction, and maintain a transparent roadmap. The repository is meant to be a practical learning resource for RV32I and FPGA CPU design.
-

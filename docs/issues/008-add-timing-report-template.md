@@ -27,4 +27,3 @@ Good first issue.
 
 - `docs/`
 - `docs/public-release-checklist.md`
-

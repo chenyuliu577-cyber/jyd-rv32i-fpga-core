@@ -29,4 +29,3 @@ Intermediate.
 - `docs/verification.md`
 - `rtl/pipeline/Branch_Predictor.sv`
 - `rtl/core/Control.sv`
-
