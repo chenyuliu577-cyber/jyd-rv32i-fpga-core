@@ -44,6 +44,10 @@ Suggested labels: `verification`, `memory`, `good-first-project`
 
 ## 4. Add CI syntax/lint workflow
 
+Status: addressed; implemented by `.github/workflows/repo-hygiene.yml`.
+This is a repository hygiene and whitespace workflow only, not a full lint,
+Vivado, XSim, HDL verification, or RV32I correctness workflow.
+
 Why this matters: The repository currently has no automated checks for pull
 requests.
 

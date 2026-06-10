@@ -13,7 +13,7 @@ This is an independent educational cleanup of a contest-oriented project. It is 
 - Verification status: a private-memory XSim record observes the RV32I 37/37 display. The memory images are not included, so this is not a public no-memory reproduction artifact.
 - Project maturity: early-stage educational release, not an industrial-grade or fully verified core.
 
-This project does not claim RV32IM support, full formal verification, production readiness, external user adoption, CI status, releases, stars, or benchmark leadership.
+This project does not claim RV32IM support, full formal verification, production readiness, external user adoption, CI coverage beyond lightweight repository hygiene checks, releases, stars, or benchmark leadership.
 
 ## Public Preview Status
 
@@ -80,6 +80,17 @@ source fpga/vivado/create_project.tcl
 ```
 
 4. When `mem/irom.coe` and `mem/dram.coe` are present, the Tcl flow attempts to bind IROM/DRAM IP initialization to those local private files.
+
+## CI Scope
+
+This repository includes a lightweight GitHub Actions workflow for repository hygiene checks.
+
+The current CI checks:
+
+- repository cleanliness using `scripts/check_clean_repo.ps1`
+- whitespace issues in tracked files using `git diff --check`
+
+The current CI does not run Vivado, XSim, synthesis, implementation, bitstream generation, FPGA board tests, or RV32I correctness verification. Hardware and CPU correctness evidence must be documented separately in verification records.
 
 ## Vivado Reconstruction
 
@@ -148,7 +159,7 @@ No official performance number is included yet.
 - Memory initialization files are excluded pending authorization review.
 - Private-memory XSim reached the RV32I 37/37 display, but the public repository still does not include redistributable memory images.
 - XCI files may still require manual Vivado/IP validation.
-- No CI workflow is included yet.
+- CI is limited to lightweight repository hygiene and whitespace checks.
 - Some testbench comments may contain encoding artifacts inherited from the working project.
 - Licensing of XDC, XCI, testbench, and memory material must be confirmed before a public release.
 

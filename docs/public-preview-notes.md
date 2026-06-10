@@ -8,7 +8,7 @@ This repository is ready for a public preview, not a formal stable release.
 - Users must provide their own `mem/irom.coe` and `mem/dram.coe`.
 - Official contest memory files are not redistributed.
 - Licensing of XDC/XCI/testbench/template-origin files still requires confirmation.
-- No CI is included yet.
+- Lightweight repository hygiene CI is included.
 - No public performance number is claimed yet.
 - No Codex for Open Source application should be submitted yet.
 
@@ -17,3 +17,7 @@ reconstruction flow, documentation, and private-memory verification summary.
 It must not be described as a stable release or as a complete public 37/37
 reproduction package until memory-image licensing and public reproducibility
 boundaries are confirmed.
+
+## CI Status
+
+The public preview includes a lightweight repository hygiene workflow. It checks repository cleanliness and whitespace issues only. It does not run Vivado, XSim, FPGA implementation, bitstream generation, or RV32I correctness verification.
