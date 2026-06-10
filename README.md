@@ -15,6 +15,10 @@ This is an independent educational cleanup of a contest-oriented project. It is 
 
 This project does not claim RV32IM support, full formal verification, production readiness, external user adoption, CI status, releases, stars, or benchmark leadership.
 
+## Public Preview Status
+
+This repository is suitable for public preview, but not yet a formal stable release. A private-memory XSim verification record observed `seg_wdata = 32'h37000000`, corresponding to the contest-style RV32I 37/37 display. The memory initialization files used for that run are not included or redistributed.
+
 ## Contest Specification Summary
 
 The referenced JYD contest requirements target the RV32I base integer ISA. The contest instruction test covers 37 instructions. `fence`, `ebreak`, and `ecall` are not tested by the contest and may be implemented as no-ops or documented as reserved behavior.
