@@ -25,6 +25,9 @@ The referenced JYD contest requirements target the RV32I base integer ISA. The c
 
 Memory and peripheral map summary:
 
+See [docs/memory-map.md](docs/memory-map.md) for an editable Mermaid diagram
+and address table.
+
 | Region | Address range | Notes |
 | --- | --- | --- |
 | IROM | `0x8000_0000` to `0x800F_FFFF` | Contest memory region |

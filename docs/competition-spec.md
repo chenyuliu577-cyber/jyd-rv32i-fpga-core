@@ -25,6 +25,9 @@ The tested 37 instructions are expected to include:
 
 ## Address Space
 
+See [memory-map.md](memory-map.md) for an editable Mermaid diagram and detailed
+address table based on the ranges below.
+
 | Region | Address range | Access |
 | --- | --- | --- |
 | IROM | `0x8000_0000` to `0x800F_FFFF` | Region requirement |
@@ -80,4 +83,3 @@ Expected display behavior:
 - LED output should match the expected performance-test pattern.
 
 The target end state is 37/37 instruction pass, correct performance-test computation, correct LED pattern, and SEG timing display. This repository has not yet added a public reproducible report proving that state.
-

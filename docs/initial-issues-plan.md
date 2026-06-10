@@ -70,6 +70,9 @@ Suggested labels: `verilator`, `simulation`, `quality`
 
 ## 6. Add memory map diagram
 
+Status: addressed by `docs/memory-map.md` as the implementation target for
+GitHub Issue #7.
+
 Why this matters: A visual memory map helps readers understand IROM, DRAM, MMIO,
 SEG, LED, switches, keys, and counter regions.
 
