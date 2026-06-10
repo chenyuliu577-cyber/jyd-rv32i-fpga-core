@@ -59,12 +59,20 @@ foreach f $tb_files {
   add_files -fileset sim_1 -norecurse [file join $repo_root $f]
 }
 
+set rtl_include_dirs [list [file join $repo_root rtl/common]]
+set_property include_dirs $rtl_include_dirs [current_fileset]
+set_property include_dirs $rtl_include_dirs [get_filesets sim_1]
+puts "Configured RTL include directories:"
+foreach d $rtl_include_dirs {
+  puts "  $d"
+}
+
 add_files -fileset constrs_1 -norecurse [file join $repo_root fpga/constraints/digital_twin.xdc]
 
 set ip_files [list \
   fpga/ip/IROM/IROM.xci \
   fpga/ip/DRAM/DRAM.xci \
-  fpga/ip/pll/pll.xci \
+  fpga/ip-optional/pll_1/pll.xci \
 ]
 
 foreach f $ip_files {
@@ -77,10 +85,31 @@ set local_dram_coe [file join $repo_root mem/dram.coe]
 if {[file exists $local_irom_coe] && [file exists $local_dram_coe]} {
   puts "NOTE: Local private memory initialization files were found under mem/."
   puts "NOTE: Expected files: mem/irom.coe and mem/dram.coe."
-  puts "NOTE: Confirm the imported IROM/DRAM IP configuration points to these files before simulation or bitstream generation."
+  foreach {ip_name coe_file} [list IROM $local_irom_coe DRAM $local_dram_coe] {
+    set ip_obj [get_ips $ip_name]
+    if {[llength $ip_obj] == 0} {
+      puts "WARNING: IP $ip_name was not found; cannot bind private memory file."
+      continue
+    }
+
+    set ip_props [list_property $ip_obj]
+    if {[lsearch -exact $ip_props CONFIG.coefficient_file] >= 0} {
+      set_property CONFIG.coefficient_file [file normalize $coe_file] $ip_obj
+      puts "NOTE: Bound $ip_name CONFIG.coefficient_file to [file normalize $coe_file]"
+    } else {
+      puts "WARNING: IP $ip_name does not expose CONFIG.coefficient_file."
+      puts "WARNING: Available file/init related properties for $ip_name:"
+      foreach prop $ip_props {
+        set prop_lc [string tolower $prop]
+        if {[string match *file* $prop_lc] || [string match *init* $prop_lc] || [string match *coeff* $prop_lc]} {
+          puts "  $prop = [get_property $prop $ip_obj]"
+        }
+      }
+    }
+  }
 } else {
-  puts "NOTE: mem/irom.coe and/or mem/dram.coe are not present."
-  puts "NOTE: This is the expected public-repository state; private memory initialization files are not redistributed."
+  puts "WARNING: mem/irom.coe and/or mem/dram.coe are not present."
+  puts "WARNING: This is the expected public-repository state; private memory initialization files are not redistributed."
 }
 
 foreach f [list mem/IROM.mif mem/DRAM.mif] {
@@ -95,10 +124,14 @@ foreach f [list mem/IROM.mif mem/DRAM.mif] {
 #   fpga/ip-optional/counter_1/counter_1.xci
 #
 # They are not imported by default because the copied RTL currently instantiates
-# `pll`, `IROM`, and `DRAM`, but does not instantiate `pll_1`, `counter_0`, or
-# `counter_1`. In Vivado 2023.2, importing `pll_1/pll.xci` conflicts with the
-# existing IP name `pll`, and the `counter_*` XCI files reference a custom IP
-# definition named `counter (1.0)` that is not present in the standard catalog.
+# `pll`, `IROM`, and `DRAM`, but does not instantiate `counter_0` or
+# `counter_1`. The default flow imports fpga/ip-optional/pll_1/pll.xci as the
+# single `pll` IP because it provides both clk_out1 and clk_out2, matching
+# rtl/soc/top.sv. Do not also import fpga/ip/pll/pll.xci by default because that
+# one-output PLL conflicts with the top-level port list.
+#
+# The `counter_*` XCI files reference a custom IP definition named `counter
+# (1.0)` that is not present in the standard catalog.
 # If those IPs are later confirmed necessary, add their IP repositories or
 # replace them with explicit Tcl generation steps.
 
@@ -113,10 +146,9 @@ update_compile_order -fileset sim_1
 # confirmed first. Place private files under mem/ only; do not use
 # fpga/imports/test_src/ for this cleanup.
 #
-# The current script checks for mem/irom.coe and mem/dram.coe, but does not
-# claim to rewrite the imported IROM/DRAM IP initialization properties
-# automatically. After project reconstruction, manually confirm the IP
-# initialization paths in Vivado before simulation or bitstream generation.
+# The script checks for mem/irom.coe and mem/dram.coe and attempts to bind them
+# to IROM/DRAM CONFIG.coefficient_file. After project reconstruction, confirm
+# those IP properties in Vivado before publishing verification claims.
 #
 # TODO: If the XCI files cannot regenerate cleanly in a fresh Vivado install,
 # replace them with explicit Tcl IP creation commands and documented parameters.
@@ -125,3 +157,4 @@ puts "Created Vivado project at $build_dir"
 puts "Top module: top"
 puts "Simulation top: tb_top"
 puts "Imported default IP: IROM, DRAM, pll"
+puts "Default PLL source: fpga/ip-optional/pll_1/pll.xci"

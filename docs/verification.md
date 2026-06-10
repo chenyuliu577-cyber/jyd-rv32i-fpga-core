@@ -1,6 +1,10 @@
 # Verification
 
-This repository does not yet include a reproducible verification report. The plan below defines how verification evidence should be collected.
+This repository does not yet include a public no-memory verification flow. The plan below defines how verification evidence should be collected.
+
+The current repository has a private-memory XSim verification record observing
+the RV32I 37/37 display. This is not a public memory-image release; the memory
+files remain private and ignored by Git.
 
 ## Private Memory Verification Workflow
 
@@ -41,7 +45,8 @@ A valid instruction-test report should include:
 - SEG output showing 37 passed instructions.
 - Any LED or UART status used by the test program.
 
-Do not record 37/37 as a project result until the evidence is checked into `docs/` or attached to a release.
+Do not record 37/37 as a public no-memory reproduction result until an
+authorized redistributable memory image or equivalent public test flow exists.
 
 ## Judging 37/37
 
@@ -50,6 +55,7 @@ The contest display rule uses the left two seven-segment digits for the RV32I pa
 - SEG value decoded as `37` for the instruction-test field.
 - No hidden testbench forcing of pass status.
 - No RTL special-casing of fixed IROM contents.
+- A clear statement about whether the result depends on private memory images.
 
 ## Performance Test Correctness
 
