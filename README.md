@@ -10,7 +10,7 @@ This is an independent educational cleanup of a contest-oriented project. It is 
 
 - Scope: RV32I contest-oriented CPU/SoC for FPGA.
 - RTL status: source files have been copied from the working project without changing CPU logic.
-- Verification status: the repository does not yet include a reproducible report proving 37/37 instruction-test pass. Treat RV32I pass count and performance results as to be added until logs or board records are available.
+- Verification status: a private-memory XSim record observes the RV32I 37/37 display. The memory images are not included, so this is not a public no-memory reproduction artifact.
 - Project maturity: early-stage educational release, not an industrial-grade or fully verified core.
 
 This project does not claim RV32IM support, full formal verification, production readiness, external user adoption, CI status, releases, stars, or benchmark leadership.
@@ -72,7 +72,7 @@ cd <repo-root>
 source fpga/vivado/create_project.tcl
 ```
 
-4. In Vivado, verify that IROM/DRAM IP initialization points to your local memory files before simulation or bitstream generation.
+4. When `mem/irom.coe` and `mem/dram.coe` are present, the Tcl flow attempts to bind IROM/DRAM IP initialization to those local private files.
 
 ## Vivado Reconstruction
 
@@ -89,9 +89,9 @@ If an IP cannot regenerate in a fresh Vivado installation, update the Tcl script
 
 The script creates local build output under `build/vivado`. This directory is ignored and should not be committed.
 
-The script currently imports the IPs instantiated by the copied RTL: `IROM`, `DRAM`, and `pll`. Additional copied XCI files under `fpga/ip-optional/` are retained for audit but are not imported by default unless their need and IP repository requirements are confirmed.
+The script currently imports the IPs instantiated by the copied RTL: `IROM`, `DRAM`, and `pll`. The default PLL source is `fpga/ip-optional/pll_1/pll.xci` because it provides both `clk_out1` and `clk_out2`, matching `rtl/soc/top.sv`. Additional copied XCI files under `fpga/ip-optional/` are retained for audit but are not imported by default unless their need and IP repository requirements are confirmed.
 
-When memory initialization files are not present, the reconstruction script reports this as the expected public-repository state. If private files are present under `mem/`, manually confirm that IROM/DRAM IP initialization points to `mem/irom.coe` and `mem/dram.coe` before simulation or bitstream generation.
+When memory initialization files are not present, the reconstruction script reports this as the expected public-repository state. If private files are present under `mem/`, the script attempts to bind IROM/DRAM IP initialization to `mem/irom.coe` and `mem/dram.coe`.
 
 ## Simulation
 
@@ -111,7 +111,7 @@ The expected verification target is:
 - Performance test: correct computation result and counter display.
 - Display behavior: SEG and LED output match the contest requirement.
 
-The public cleanup currently does not include a reproducible verification report. See `docs/verification.md` and `docs/verification-record-template.md` for the planned evidence format.
+The repository includes a private-memory XSim verification record observing `seg_wdata = 32'h37000000`, interpreted as the RV32I 37/37 display. The private memory images are excluded from Git. See `docs/verification.md` and `docs/verification-record-template.md` for the evidence format.
 
 ## Performance
 
@@ -124,7 +124,7 @@ No official performance number is included yet.
 ## Before Public Release
 
 - Confirm file licensing.
-- Add at least one reproducible simulation or board verification record.
+- Keep the private-memory XSim verification record, and add a public-memory or authorized-memory release record before a formal release.
 - Validate `fpga/vivado/create_project.tcl` on a clean machine.
 - Run `scripts/check_clean_repo.ps1`.
 - Review `docs/packaging.md` before creating a source archive.
@@ -139,8 +139,8 @@ No official performance number is included yet.
 ## Known Limitations
 
 - Memory initialization files are excluded pending authorization review.
+- Private-memory XSim reached the RV32I 37/37 display, but the public repository still does not include redistributable memory images.
 - XCI files may still require manual Vivado/IP validation.
-- No public 37/37 verification artifact is included yet.
 - No CI workflow is included yet.
 - Some testbench comments may contain encoding artifacts inherited from the working project.
 - Licensing of XDC, XCI, testbench, and memory material must be confirmed before a public release.

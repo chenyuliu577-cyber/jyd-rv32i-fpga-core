@@ -28,11 +28,13 @@ Use this checklist before the first public GitHub release and before every later
 - [ ] Confirm `fpga/constraints/digital_twin.xdc` is loaded.
 - [ ] Confirm IP files are loaded or regenerated.
 - [ ] Confirm memory initialization handling is documented.
+- [ ] Confirm whether verification uses private memory images or redistributable public memory images.
 
 ## Verification
 
 - [ ] Add at least one verification record before first public release.
-- [ ] Do not claim 37/37 until evidence exists.
+- [ ] Do not claim public 37/37 reproducibility unless redistributable memory images or an equivalent public test flow exist.
+- [ ] If using private memory verification, state that memory files are not included in Git.
 - [ ] Document SEG output.
 - [ ] Document LED output.
 - [ ] Document counter start/stop and timing result.
@@ -49,4 +51,3 @@ Use this checklist before the first public GitHub release and before every later
 - [ ] Honest application statement.
 - [ ] No fake usage metrics.
 - [ ] No unsupported claims about external users, CI, benchmarks, or production readiness.
-

@@ -21,7 +21,8 @@ Vivado may warn when the repository is checked out under a long Windows path. If
 - RTL from `rtl/`.
 - Testbench files from `tb/`.
 - Constraints from `fpga/constraints/digital_twin.xdc`.
-- Default XCI files from `fpga/ip/`.
+- Default IROM/DRAM XCI files from `fpga/ip/`.
+- Default PLL XCI from `fpga/ip-optional/pll_1/pll.xci`.
 
 ## Top Modules
 
@@ -41,7 +42,7 @@ The repository does not include memory initialization files. Add authorized priv
 
 Do not place private memory files under `fpga/imports/test_src/`, and do not commit `.coe` or `.mif` files.
 
-When memory files are absent, the reconstruction script reports this as the expected public-repository state. When `mem/irom.coe` and `mem/dram.coe` are present, it reports that local private memory files were found. The script does not currently claim to rewrite IROM/DRAM IP initialization properties automatically; confirm the IP paths manually in Vivado before simulation or bitstream generation.
+When memory files are absent, the reconstruction script reports this as the expected public-repository state. When `mem/irom.coe` and `mem/dram.coe` are present, it reports that local private memory files were found and attempts to bind IROM/DRAM `CONFIG.coefficient_file` to those paths. Confirm the IP paths in Vivado before publishing verification claims.
 
 If imported XCI files do not regenerate cleanly, replace the import step with explicit IP creation Tcl and document all parameters.
 
@@ -51,11 +52,24 @@ The default reconstruction script imports only the IPs that are instantiated by 
 - `DRAM`
 - `pll`
 
-The repository also keeps `pll_1`, `counter_0`, and `counter_1` XCI files under `fpga/ip-optional/` for audit and future review. They are not imported by default because the current RTL search found no instantiation of those IP module names. In Vivado 2023.2, `pll_1/pll.xci` conflicts with the existing IP name `pll`, and `counter_0`/`counter_1` reference a custom `counter (1.0)` IP definition that is not available in the standard Vivado catalog.
+The default PLL source is `fpga/ip-optional/pll_1/pll.xci`. It still creates an IP named `pll`, but it has two clock outputs:
+
+- `clk_out1`: 50 MHz
+- `clk_out2`: 80 MHz
+
+This matches `rtl/soc/top.sv`, which connects `clk_out1`, `clk_out2`, and `locked`. The one-output `fpga/ip/pll/pll.xci` is retained for audit but is not imported by default because it does not provide the `clk_out2` port used by the top-level RTL.
+
+The repository also keeps `counter_0` and `counter_1` XCI files under `fpga/ip-optional/` for audit and future review. They are not imported by default because `counter_0`/`counter_1` reference a custom `counter (1.0)` IP definition that is not available in the standard Vivado catalog.
 
 ## PLL
 
-The original project used a PLL IP and FPGA part `xc7k325tffg900-2`. The contest default CPU clock is 50 MHz, but the effective clock should be confirmed from the PLL IP settings before publishing timing or performance claims.
+The original project used a PLL IP and FPGA part `xc7k325tffg900-2`. The current default reconstruction uses the two-output PLL configuration copied from the working project:
+
+- input: 200 MHz differential clock
+- `clk_out1`: 50 MHz
+- `clk_out2`: 80 MHz
+
+Do not publish timing or performance claims without a matching timing or board record.
 
 ## Synthesis, Implementation, Bitstream
 
