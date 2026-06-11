@@ -18,6 +18,15 @@ This is an independent educational cleanup of a contest-oriented project. It is 
 
 This project does not claim RV32IM support, full formal verification, production readiness, external user adoption, CI coverage beyond lightweight repository hygiene checks, releases, stars, or benchmark leadership.
 
+## Release Status
+
+The repository is currently suitable for a `v0.1.0-preview` milestone, not a
+formal stable release.
+
+The preview includes public smoke, branch-directed, and load/store-directed
+XSim verification records. It does not include contest-private memory images,
+public RV32I 37/37 memory images, or official performance benchmark results.
+
 ## Public Preview Status
 
 This repository is suitable for public preview, but not yet a formal stable release. A private-memory XSim verification record observed `seg_wdata = 32'h37000000`, corresponding to the contest-style RV32I 37/37 display. The memory initialization files used for that run are not included or redistributed.
