@@ -1,31 +1,67 @@
 # Performance
 
-No reliable public performance number is included in this cleanup. Performance data is待补充.
+No official public performance benchmark result is claimed yet.
 
 ## Counter Mechanism
 
-The contest counter is mapped at `0x8020_0050` to `0x8020_0053`.
+The performance counter MMIO address is `0x8020_0050`.
 
-Contest request summary:
+The documented command values are:
 
-- Write `0x8000_0000` to start counting.
-- Write `0xFFFF_FFFF` to stop counting.
+- Start command: write `0x8000_0000` to `0x8020_0050`.
+- Stop command: write `0xFFFF_FFFF` to `0x8020_0050`.
 
-The copied RTL shows `CNT_START_CMD = 32'h8000_0000` in `perip_bridge.sv`. The stop command requires review before documenting final behavior.
+Any performance record should state how these commands were observed, such as
+an RTL signal, testbench display, SEG output, board display, or another clearly
+described method.
 
-## Display
+## SEG Timing
 
-The contest display rule expects the right six seven-segment digits to show performance-test execution time in milliseconds. The left two digits show RV32I instruction-test pass count.
+Contest-style performance output may be shown on the seven-segment display in
+milliseconds. A performance record must distinguish between raw SEG data and an
+interpreted time value.
 
-## Reporting Rules
+If a result is collected from simulation, label it as simulation. If a result is
+collected from a physical FPGA board, label it as a board run. Do not present a
+simulation observation as a board timing result.
 
-Any future performance report must include:
+## Evidence Policy
 
+Every performance number must include:
+
+- Commit hash.
 - Vivado version.
-- FPGA board and clock frequency.
-- Exact memory initialization files.
-- Whether the run was simulation or board execution.
+- OS.
+- Board or simulation environment.
+- Clock frequency or clock source.
+- Memory image source.
+- Whether private memory files were used.
 - Counter start/stop evidence.
 - SEG and LED observations.
+- Computation-result correctness evidence, if the benchmark includes a
+  computation result.
 
-Do not publish temporary test results as final performance. Do not optimize specifically for fixed IROM contents or a fixed benchmark while presenting it as a general optimization.
+Private memory files must not be committed. Complete Vivado logs, XSim logs,
+waveforms, WDB files, bitstreams, DCP checkpoints, and generated Vivado outputs
+should not be committed unless explicitly approved and reviewed for privacy and
+redistribution concerns.
+
+Use `docs/performance-verification-template.md` for future performance records.
+
+## Current Repository Status
+
+- Public smoke memory verifies a minimal public CPU/MMIO path. It is not a
+  performance benchmark.
+- Private-memory RV32I 37/37 verification exists separately and does not provide
+  an official public performance benchmark result.
+- No public full performance result is claimed yet.
+
+## What Not to Claim
+
+Do not claim:
+
+- benchmark leadership
+- a stable contest performance score
+- a public full performance result without a verification record
+- board timing from a simulation-only observation
+- full RV32I correctness from the public smoke memory test

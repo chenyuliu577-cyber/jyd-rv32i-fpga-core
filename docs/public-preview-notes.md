@@ -29,6 +29,12 @@ contest-private memory files.
 The smoke program writes raw SEG value `0x00000037` to address `0x8020_0020`.
 That value is a smoke-test marker only and is not a public RV32I 37/37 result.
 
+## Performance Status
+
+The public preview includes performance documentation and a performance
+verification template, but it does not claim an official public performance
+benchmark result.
+
 ## CI Status
 
 The public preview includes a lightweight repository hygiene workflow. It checks repository cleanliness and whitespace issues only. It does not run Vivado, XSim, FPGA implementation, bitstream generation, or RV32I correctness verification.

@@ -162,6 +162,11 @@ The performance counter is memory-mapped at `0x8020_0050`. According to the cont
 
 The current repository still needs RTL-level and simulation-level evidence proving that the implementation fully matches that specification. Seven-segment display timing in milliseconds is part of the contest output behavior.
 
+Performance numbers are not claimed unless accompanied by a verification
+record that identifies the commit hash, memory image source, environment, and
+whether the result came from simulation or a board run. See
+`docs/performance.md` and `docs/performance-verification-template.md`.
+
 No official performance number is included yet.
 
 ## Before Public Release

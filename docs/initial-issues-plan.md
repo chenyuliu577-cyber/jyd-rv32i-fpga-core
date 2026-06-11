@@ -142,6 +142,10 @@ Suggested labels: `documentation`, `verification`, `board`
 
 ## 10. Add performance verification record
 
+Status: Partially addressed. A performance verification template and evidence
+policy are now documented. The issue should remain open until at least one real
+performance result is recorded.
+
 Why this matters: The repository should not claim performance results until
 counter start/stop, display units, and computation correctness are verified.
 
