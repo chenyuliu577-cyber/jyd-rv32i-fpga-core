@@ -33,16 +33,35 @@ Vivado may warn when the repository is checked out under a long Windows path. If
 
 The checked-in XCI files are copied from the working project after checking for local path strings. They may still require manual validation in a fresh Vivado environment.
 
-The repository does not include memory initialization files. Add authorized private memory files only under `mem/`:
+The repository includes public self-generated smoke memory under
+`tests/public-memory/`. These files are generated from
+`tools/gen_public_smoke_memory.py` and are not derived from contest-private
+memory files.
+
+Private contest memory files remain excluded. Add authorized private memory
+files only under `mem/`:
 
 - `mem/irom.coe`
 - `mem/dram.coe`
 - `mem/IROM.mif`
 - `mem/DRAM.mif`
 
-Do not place private memory files under `fpga/imports/test_src/`, and do not commit `.coe` or `.mif` files.
+Do not place private memory files under `fpga/imports/test_src/`, and do not
+commit private `.coe` or `.mif` files under `mem/`.
 
-When memory files are absent, the reconstruction script reports this as the expected public-repository state. When `mem/irom.coe` and `mem/dram.coe` are present, it reports that local private memory files were found and attempts to bind IROM/DRAM `CONFIG.coefficient_file` to those paths. Confirm the IP paths in Vivado before publishing verification claims.
+The reconstruction script selects memory in this order:
+
+1. `mem/irom.coe` and `mem/dram.coe` private local files.
+2. `tests/public-memory/irom.coe` and `tests/public-memory/dram.coe` public
+   smoke files.
+3. No memory files, with a warning that simulation may not run meaningful CPU
+   code.
+
+Confirm the IROM/DRAM `CONFIG.coefficient_file` paths in Vivado before
+publishing verification claims.
+
+The public smoke program writes raw SEG value `0x00000037` to MMIO address
+`0x8020_0020`. This is only a smoke marker and is not RV32I 37/37 verification.
 
 If imported XCI files do not regenerate cleanly, replace the import step with explicit IP creation Tcl and document all parameters.
 

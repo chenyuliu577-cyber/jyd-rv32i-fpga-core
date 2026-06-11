@@ -37,8 +37,7 @@ foreach ($dir in $forbiddenDirs) {
 
 $forbiddenFilePatterns = @(
     "*.log", "*.jou", "*.dmp", "*.dcp", "*.bit", "*.rpt", "*.wdb",
-    "*.str", "*.pb", "*.rpx", "*.wcfg", "*.vcd", "*.fst", "hs_err_pid*",
-    "*.coe", "*.mif", "IROM.mif", "DRAM.mif", "irom.coe", "dram.coe"
+    "*.str", "*.pb", "*.rpx", "*.wcfg", "*.vcd", "*.fst", "hs_err_pid*"
 )
 
 foreach ($pattern in $forbiddenFilePatterns) {
@@ -46,6 +45,28 @@ foreach ($pattern in $forbiddenFilePatterns) {
         Where-Object { $_.FullName -notmatch "\\.git(\x5c|/|$)" } |
         ForEach-Object { Add-Issue "Forbidden file found: $(Relative-Path $_.FullName)" }
 }
+
+$allowlistedMemoryFiles = New-Object System.Collections.Generic.HashSet[string]([System.StringComparer]::OrdinalIgnoreCase)
+@(
+    "tests/public-memory/irom.coe",
+    "tests/public-memory/dram.coe",
+    "tests/public-memory/IROM.mif",
+    "tests/public-memory/DRAM.mif"
+) | ForEach-Object { $allowlistedMemoryFiles.Add($_) | Out-Null }
+
+Get-ChildItem -Path $repo.Path -Recurse -File -Force |
+    Where-Object {
+        $_.FullName -notmatch "\\.git(\x5c|/|$)" -and
+        ($_.Extension -ieq ".coe" -or $_.Extension -ieq ".mif")
+    } |
+    ForEach-Object {
+        $relative = (Relative-Path $_.FullName).Replace('\', '/')
+        if ($allowlistedMemoryFiles.Contains($relative)) {
+            Write-Host "NOTE: Allowlisted public smoke memory file: $relative"
+        } else {
+            Add-Issue "Forbidden memory initialization file found: $relative"
+        }
+    }
 
 $tooLarge = Get-ChildItem -Path $repo.Path -Recurse -File -Force |
     Where-Object { $_.FullName -notmatch "\\.git(\x5c|/|$)" -and $_.Length -gt 10MB }

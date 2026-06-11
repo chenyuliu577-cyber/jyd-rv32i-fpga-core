@@ -79,16 +79,30 @@ foreach f $ip_files {
   import_ip -files [file join $repo_root $f]
 }
 
-set local_irom_coe [file join $repo_root mem/irom.coe]
-set local_dram_coe [file join $repo_root mem/dram.coe]
+set private_irom_coe [file join $repo_root mem/irom.coe]
+set private_dram_coe [file join $repo_root mem/dram.coe]
+set public_irom_coe [file join $repo_root tests/public-memory/irom.coe]
+set public_dram_coe [file join $repo_root tests/public-memory/dram.coe]
+set selected_irom_coe ""
+set selected_dram_coe ""
 
-if {[file exists $local_irom_coe] && [file exists $local_dram_coe]} {
-  puts "NOTE: Local private memory initialization files were found under mem/."
-  puts "NOTE: Expected files: mem/irom.coe and mem/dram.coe."
-  foreach {ip_name coe_file} [list IROM $local_irom_coe DRAM $local_dram_coe] {
+if {[file exists $private_irom_coe] && [file exists $private_dram_coe]} {
+  puts "Using private memory images from mem/"
+  set selected_irom_coe $private_irom_coe
+  set selected_dram_coe $private_dram_coe
+} elseif {[file exists $public_irom_coe] && [file exists $public_dram_coe]} {
+  puts "Using public smoke memory images from tests/public-memory/"
+  set selected_irom_coe $public_irom_coe
+  set selected_dram_coe $public_dram_coe
+} else {
+  puts "WARNING: No memory initialization files found. Vivado project can be created, but simulation may not run meaningful CPU code."
+}
+
+if {$selected_irom_coe ne "" && $selected_dram_coe ne ""} {
+  foreach {ip_name coe_file} [list IROM $selected_irom_coe DRAM $selected_dram_coe] {
     set ip_obj [get_ips $ip_name]
     if {[llength $ip_obj] == 0} {
-      puts "WARNING: IP $ip_name was not found; cannot bind private memory file."
+      puts "WARNING: IP $ip_name was not found; cannot bind memory file."
       continue
     }
 
@@ -107,9 +121,6 @@ if {[file exists $local_irom_coe] && [file exists $local_dram_coe]} {
       }
     }
   }
-} else {
-  puts "WARNING: mem/irom.coe and/or mem/dram.coe are not present."
-  puts "WARNING: This is the expected public-repository state; private memory initialization files are not redistributed."
 }
 
 foreach f [list mem/IROM.mif mem/DRAM.mif] {
@@ -146,9 +157,10 @@ update_compile_order -fileset sim_1
 # confirmed first. Place private files under mem/ only; do not use
 # fpga/imports/test_src/ for this cleanup.
 #
-# The script checks for mem/irom.coe and mem/dram.coe and attempts to bind them
-# to IROM/DRAM CONFIG.coefficient_file. After project reconstruction, confirm
-# those IP properties in Vivado before publishing verification claims.
+# The script prefers private mem/irom.coe and mem/dram.coe when present. If
+# they are absent, it uses the repository-owned public smoke memory images under
+# tests/public-memory/. After project reconstruction, confirm the selected IP
+# properties in Vivado before publishing verification claims.
 #
 # TODO: If the XCI files cannot regenerate cleanly in a fresh Vivado install,
 # replace them with explicit Tcl IP creation commands and documented parameters.

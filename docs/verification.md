@@ -1,10 +1,37 @@
 # Verification
 
-This repository does not yet include a public no-memory verification flow. The plan below defines how verification evidence should be collected.
+This repository includes a public self-generated smoke memory flow. It is a
+minimal reproducible path, not a public RV32I 37/37 verification flow. The plan
+below defines how verification evidence should be collected.
 
 The current repository has a private-memory XSim verification record observing
 the RV32I 37/37 display. This is not a public memory-image release; the memory
 files remain private and ignored by Git.
+
+## Public Smoke Memory Workflow
+
+The public smoke memory is generated from repository-owned source and script:
+
+- `tests/public-smoke/rv32i_smoke.S`
+- `tools/gen_public_smoke_memory.py`
+- `tests/public-memory/irom.coe`
+- `tests/public-memory/dram.coe`
+
+Regenerate it with:
+
+```powershell
+python tools/gen_public_smoke_memory.py
+```
+
+The expected public smoke marker is a raw write of `0x00000037` to SEG MMIO
+address `0x8020_0020`. The smoke program also writes `0x00000001` to LED MMIO
+address `0x8020_0040` and writes counter start/stop commands to
+`0x8020_0050`.
+
+This flow can show that a public instruction memory image can be generated,
+loaded into the Vivado project, and used for a minimal CPU/MMIO path. It does
+not cover all RV32I instructions and must not be described as 37/37
+verification.
 
 ## Private Memory Verification Workflow
 

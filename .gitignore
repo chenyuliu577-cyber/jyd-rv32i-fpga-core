@@ -42,6 +42,11 @@ mem/*.mif
 *.coe
 *.mif
 !mem/README.md
+!tests/public-memory/
+!tests/public-memory/irom.coe
+!tests/public-memory/dram.coe
+!tests/public-memory/IROM.mif
+!tests/public-memory/DRAM.mif
 
 # Crash dumps
 hs_err_pid*

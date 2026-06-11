@@ -31,16 +31,38 @@ observed internal SEG write data was `32'h37000000`, interpreted as the RV32I
 37/37 display. This result depends on private memory images that are not
 included in Git.
 
+With private memory absent, the Vivado reconstruction script falls back to the
+public self-generated smoke memory under `tests/public-memory/`. The expected
+public smoke observation is a raw write of `0x00000037` to SEG address
+`0x8020_0020`, an optional raw write of `0x00000001` to LED address
+`0x8020_0040`, and counter start/stop writes to `0x8020_0050`. The SEG value is
+only a smoke marker; it is not an RV32I 37/37 result.
+
 ## Memory Initialization
 
-The cleanup excludes private memory initialization files. Add authorized files only under `mem/`:
+The cleanup excludes private contest memory initialization files. Add
+authorized private files only under `mem/`:
 
 - `mem/irom.coe`
 - `mem/dram.coe`
 - `mem/IROM.mif`
 - `mem/DRAM.mif`
 
-Before running tests that depend on program memory, recreate the Vivado project and confirm that the IROM/DRAM IP configuration uses the local files under `mem/`. The Tcl flow attempts to bind `CONFIG.coefficient_file` automatically when `mem/irom.coe` and `mem/dram.coe` are present. Do not commit `.coe` or `.mif` files.
+Before running private-memory tests, recreate the Vivado project and confirm
+that the IROM/DRAM IP configuration uses the local files under `mem/`. The Tcl
+flow attempts to bind `CONFIG.coefficient_file` automatically when
+`mem/irom.coe` and `mem/dram.coe` are present. Do not commit private `.coe` or
+`.mif` files.
+
+To regenerate and test the public smoke memory:
+
+```powershell
+python tools/gen_public_smoke_memory.py
+vivado -mode batch -source fpga/vivado/create_project.tcl
+```
+
+Then run `tb_top` in XSim and observe the SEG/LED/counter signals. Record the
+result as public smoke verification only, not full RV32I verification.
 
 ## Waveforms
 

@@ -11,6 +11,7 @@ This is an independent educational cleanup of a contest-oriented project. It is 
 - Scope: RV32I contest-oriented CPU/SoC for FPGA.
 - RTL status: source files have been copied from the working project without changing CPU logic.
 - Verification status: a private-memory XSim record observes the RV32I 37/37 display. The memory images are not included, so this is not a public no-memory reproduction artifact.
+- Public smoke status: repository-owned public smoke memory images are included under `tests/public-memory/`. They are generated from `tools/gen_public_smoke_memory.py` and do not claim RV32I 37/37 coverage.
 - Project maturity: early-stage educational release, not an industrial-grade or fully verified core.
 
 This project does not claim RV32IM support, full formal verification, production readiness, external user adoption, CI coverage beyond lightweight repository hygiene checks, releases, stars, or benchmark leadership.
@@ -18,6 +19,10 @@ This project does not claim RV32IM support, full formal verification, production
 ## Public Preview Status
 
 This repository is suitable for public preview, but not yet a formal stable release. A private-memory XSim verification record observed `seg_wdata = 32'h37000000`, corresponding to the contest-style RV32I 37/37 display. The memory initialization files used for that run are not included or redistributed.
+
+The repository also includes a public self-generated smoke memory image. It
+writes raw value `0x00000037` to SEG MMIO address `0x8020_0020` as a smoke-test
+marker. This marker is not an RV32I 37/37 instruction-test result.
 
 ## Contest Specification Summary
 
@@ -58,14 +63,24 @@ fpga/vivado/       project reconstruction Tcl
 mem/               user-supplied memory initialization files
 docs/              architecture, verification, Vivado, and release notes
 scripts/           repository hygiene scripts
+tests/public-smoke/ public RV32I smoke-test source
+tests/public-memory/ generated public smoke-test COE files
+tools/             repository utility scripts
 ```
 
 ## Quick Start
 
-1. Review `mem/README.md` and provide your own memory initialization files.
-   Private memory files must live under `mem/` as `mem/irom.coe`,
-   `mem/dram.coe`, `mem/IROM.mif`, or `mem/DRAM.mif`, and must not be
-   committed.
+1. Regenerate the public smoke memory images if needed:
+
+```powershell
+python tools/gen_public_smoke_memory.py
+```
+
+   The generated `tests/public-memory/irom.coe` and
+   `tests/public-memory/dram.coe` files are public, repository-owned smoke
+   images. Private memory files, if used, must live under `mem/` as
+   `mem/irom.coe`, `mem/dram.coe`, `mem/IROM.mif`, or `mem/DRAM.mif`, and must
+   not be committed.
 2. Run the clean-repository check:
 
 ```powershell
@@ -79,7 +94,9 @@ cd <repo-root>
 source fpga/vivado/create_project.tcl
 ```
 
-4. When `mem/irom.coe` and `mem/dram.coe` are present, the Tcl flow attempts to bind IROM/DRAM IP initialization to those local private files.
+4. When `mem/irom.coe` and `mem/dram.coe` are present, the Tcl flow uses those
+   private files first. Otherwise, it uses the public smoke files under
+   `tests/public-memory/` when they are present.
 
 ## CI Scope
 
@@ -109,7 +126,10 @@ The script creates local build output under `build/vivado`. This directory is ig
 
 The script currently imports the IPs instantiated by the copied RTL: `IROM`, `DRAM`, and `pll`. The default PLL source is `fpga/ip-optional/pll_1/pll.xci` because it provides both `clk_out1` and `clk_out2`, matching `rtl/soc/top.sv`. Additional copied XCI files under `fpga/ip-optional/` are retained for audit but are not imported by default unless their need and IP repository requirements are confirmed.
 
-When memory initialization files are not present, the reconstruction script reports this as the expected public-repository state. If private files are present under `mem/`, the script attempts to bind IROM/DRAM IP initialization to `mem/irom.coe` and `mem/dram.coe`.
+The reconstruction script prefers private `mem/irom.coe` and `mem/dram.coe`
+files when they are present. If those private files are absent, it uses the
+public smoke memory images under `tests/public-memory/`. If neither source is
+available, it warns that simulation may not run meaningful CPU code.
 
 ## Simulation
 
@@ -129,7 +149,12 @@ The expected verification target is:
 - Performance test: correct computation result and counter display.
 - Display behavior: SEG and LED output match the contest requirement.
 
-The repository includes a private-memory XSim verification record observing `seg_wdata = 32'h37000000`, interpreted as the RV32I 37/37 display. The private memory images are excluded from Git. See `docs/verification.md` and `docs/verification-record-template.md` for the evidence format.
+The repository includes a private-memory XSim verification record observing
+`seg_wdata = 32'h37000000`, interpreted as the RV32I 37/37 display. The private
+memory images are excluded from Git. The public smoke memory writes raw value
+`0x00000037` to SEG as a minimal path marker only; it is not an RV32I 37/37
+result. See `docs/verification.md` and `docs/verification-record-template.md`
+for the evidence format.
 
 ## Performance
 
@@ -156,8 +181,9 @@ No official performance number is included yet.
 
 ## Known Limitations
 
-- Memory initialization files are excluded pending authorization review.
+- Private contest memory initialization files are excluded pending authorization review.
 - Private-memory XSim reached the RV32I 37/37 display, but the public repository still does not include redistributable memory images.
+- Public smoke memory is self-generated from repository-owned source and only checks a minimal reproducible path.
 - XCI files may still require manual Vivado/IP validation.
 - CI is limited to lightweight repository hygiene and whitespace checks.
 - Some testbench comments may contain encoding artifacts inherited from the working project.

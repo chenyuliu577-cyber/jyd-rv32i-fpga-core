@@ -31,6 +31,10 @@ Suggested labels: `vivado`, `ip`, `licensing`, `release-blocker`
 
 ## 3. Add public self-generated RV32I memory image
 
+Status: addressed by `tests/public-smoke/`, `tests/public-memory/`, and
+`tools/gen_public_smoke_memory.py`. This is a public smoke memory flow only,
+not a public RV32I 37/37 verification package.
+
 Why this matters: Current 37/37 verification depends on private memory images
 that are not included in Git.
 
