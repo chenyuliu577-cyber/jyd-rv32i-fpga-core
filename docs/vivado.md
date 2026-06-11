@@ -85,6 +85,11 @@ The reconstruction script selects memory in this order:
 3. No memory files, with a warning that simulation may not run meaningful CPU
    code.
 
+Set `JYD_MEMORY_PROFILE=branch` to explicitly select
+`tests/branch-memory/irom.coe` and `tests/branch-memory/dram.coe` when private
+memory files are absent. Branch directed memory is not the default public
+profile.
+
 Confirm the IROM/DRAM `CONFIG.coefficient_file` paths in Vivado before
 publishing verification claims.
 

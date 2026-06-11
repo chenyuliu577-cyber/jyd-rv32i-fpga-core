@@ -104,6 +104,10 @@ Suggested labels: `documentation`, `architecture`, `good-first-issue`
 
 ## 7. Add directed branch instruction tests
 
+Status: addressed by `tests/branch-directed/`, `tests/branch-memory/`, and
+`tools/gen_branch_directed_memory.py`. This is a public branch directed memory
+flow only, not complete RV32I 37/37 verification.
+
 Why this matters: Branch handling is a common source of CPU correctness bugs.
 
 Acceptance criteria:

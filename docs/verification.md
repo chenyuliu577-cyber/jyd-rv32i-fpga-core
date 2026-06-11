@@ -33,6 +33,50 @@ loaded into the Vivado project, and used for a minimal CPU/MMIO path. It does
 not cover all RV32I instructions and must not be described as 37/37
 verification.
 
+## Public Branch Directed Memory Workflow
+
+The public branch directed memory is generated from repository-owned source and
+script:
+
+- `tests/branch-directed/rv32i_branch_directed.S`
+- `tools/gen_branch_directed_memory.py`
+- `tests/branch-memory/irom.coe`
+- `tests/branch-memory/dram.coe`
+
+Regenerate it with:
+
+```powershell
+python tools/gen_branch_directed_memory.py
+```
+
+This memory profile is not selected by default. To use it in the Vivado
+reconstruction flow, set:
+
+```powershell
+$env:JYD_MEMORY_PROFILE = "branch"
+vivado -mode batch -source fpga/vivado/create_project.tcl
+```
+
+The directed branch test covers:
+
+- BEQ taken
+- BEQ not taken
+- BNE taken
+- BNE not taken
+- BLT signed taken
+- BGE signed taken
+- BLTU unsigned taken
+- BGEU unsigned taken
+- JAL final self-loop
+
+The expected success marker is SEG raw value `0x0000BEEF` and LED raw value
+`0x00000001`. The failure marker is SEG raw value `0x0000BAD0` and LED raw
+value `0x000000EE`.
+
+This flow checks selected branch behavior only. It does not cover all branch
+corner cases, does not cover all RV32I instructions, and must not be described
+as RV32I 37/37 verification.
+
 ## Private Memory Verification Workflow
 
 Private memory initialization files are allowed only for local verification and

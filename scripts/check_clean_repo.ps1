@@ -51,7 +51,9 @@ $allowlistedMemoryFiles = New-Object System.Collections.Generic.HashSet[string](
     "tests/public-memory/irom.coe",
     "tests/public-memory/dram.coe",
     "tests/public-memory/IROM.mif",
-    "tests/public-memory/DRAM.mif"
+    "tests/public-memory/DRAM.mif",
+    "tests/branch-memory/irom.coe",
+    "tests/branch-memory/dram.coe"
 ) | ForEach-Object { $allowlistedMemoryFiles.Add($_) | Out-Null }
 
 Get-ChildItem -Path $repo.Path -Recurse -File -Force |
@@ -62,7 +64,7 @@ Get-ChildItem -Path $repo.Path -Recurse -File -Force |
     ForEach-Object {
         $relative = (Relative-Path $_.FullName).Replace('\', '/')
         if ($allowlistedMemoryFiles.Contains($relative)) {
-            Write-Host "NOTE: Allowlisted public smoke memory file: $relative"
+            Write-Host "NOTE: Allowlisted public test memory file: $relative"
         } else {
             Add-Issue "Forbidden memory initialization file found: $relative"
         }

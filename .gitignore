@@ -47,6 +47,9 @@ mem/*.mif
 !tests/public-memory/dram.coe
 !tests/public-memory/IROM.mif
 !tests/public-memory/DRAM.mif
+!tests/branch-memory/
+!tests/branch-memory/irom.coe
+!tests/branch-memory/dram.coe
 
 # Crash dumps
 hs_err_pid*

@@ -83,17 +83,36 @@ set private_irom_coe [file join $repo_root mem/irom.coe]
 set private_dram_coe [file join $repo_root mem/dram.coe]
 set public_irom_coe [file join $repo_root tests/public-memory/irom.coe]
 set public_dram_coe [file join $repo_root tests/public-memory/dram.coe]
+set branch_irom_coe [file join $repo_root tests/branch-memory/irom.coe]
+set branch_dram_coe [file join $repo_root tests/branch-memory/dram.coe]
 set selected_irom_coe ""
 set selected_dram_coe ""
+set memory_profile "smoke"
+
+if {[info exists ::env(JYD_MEMORY_PROFILE)]} {
+  set memory_profile [string tolower $::env(JYD_MEMORY_PROFILE)]
+}
 
 if {[file exists $private_irom_coe] && [file exists $private_dram_coe]} {
   puts "Using private memory images from mem/"
   set selected_irom_coe $private_irom_coe
   set selected_dram_coe $private_dram_coe
+} elseif {$memory_profile eq "branch"} {
+  if {[file exists $branch_irom_coe] && [file exists $branch_dram_coe]} {
+    puts "Using branch directed memory images from tests/branch-memory/ because JYD_MEMORY_PROFILE=branch"
+    set selected_irom_coe $branch_irom_coe
+    set selected_dram_coe $branch_dram_coe
+  } else {
+    puts "WARNING: JYD_MEMORY_PROFILE=branch was requested, but tests/branch-memory/irom.coe and/or tests/branch-memory/dram.coe are not present."
+    puts "WARNING: Vivado project can be created, but simulation may not run meaningful branch-directed CPU code."
+  }
 } elseif {[file exists $public_irom_coe] && [file exists $public_dram_coe]} {
   puts "Using public smoke memory images from tests/public-memory/"
   set selected_irom_coe $public_irom_coe
   set selected_dram_coe $public_dram_coe
+} elseif {$memory_profile ne "smoke"} {
+  puts "WARNING: Unknown JYD_MEMORY_PROFILE=$memory_profile. Supported profiles: smoke, branch."
+  puts "WARNING: No matching memory initialization files found. Vivado project can be created, but simulation may not run meaningful CPU code."
 } else {
   puts "WARNING: No memory initialization files found. Vivado project can be created, but simulation may not run meaningful CPU code."
 }
@@ -159,8 +178,9 @@ update_compile_order -fileset sim_1
 #
 # The script prefers private mem/irom.coe and mem/dram.coe when present. If
 # they are absent, it uses the repository-owned public smoke memory images under
-# tests/public-memory/. After project reconstruction, confirm the selected IP
-# properties in Vivado before publishing verification claims.
+# tests/public-memory/ by default. Set JYD_MEMORY_PROFILE=branch to explicitly
+# use tests/branch-memory/ instead. After project reconstruction, confirm the
+# selected IP properties in Vivado before publishing verification claims.
 #
 # TODO: If the XCI files cannot regenerate cleanly in a fresh Vivado install,
 # replace them with explicit Tcl IP creation commands and documented parameters.

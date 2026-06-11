@@ -38,6 +38,12 @@ public smoke observation is a raw write of `0x00000037` to SEG address
 `0x8020_0040`, and counter start/stop writes to `0x8020_0050`. The SEG value is
 only a smoke marker; it is not an RV32I 37/37 result.
 
+The public branch directed memory is available only when explicitly selected
+with `JYD_MEMORY_PROFILE=branch`. Its expected success observation is a raw
+write of `0x0000BEEF` to SEG address `0x8020_0020` and `0x00000001` to LED
+address `0x8020_0040`. A failure path writes SEG raw value `0x0000BAD0` and LED
+raw value `0x000000EE`. This directed test is not full RV32I verification.
+
 ## Memory Initialization
 
 The cleanup excludes private contest memory initialization files. Add
@@ -63,6 +69,17 @@ vivado -mode batch -source fpga/vivado/create_project.tcl
 
 Then run `tb_top` in XSim and observe the SEG/LED/counter signals. Record the
 result as public smoke verification only, not full RV32I verification.
+
+To regenerate and test the public branch directed memory:
+
+```powershell
+python tools/gen_branch_directed_memory.py
+$env:JYD_MEMORY_PROFILE = "branch"
+vivado -mode batch -source fpga/vivado/create_project.tcl
+```
+
+Then run `tb_top` in XSim and observe the SEG/LED signals. Record the result as
+branch directed verification only, not RV32I 37/37 verification.
 
 ## Waveforms
 
