@@ -29,6 +29,34 @@ Vivado may warn when the repository is checked out under a long Windows path. If
 - Synthesis top: `top`.
 - Simulation top: `tb_top`.
 
+## Vivado IP Handling
+
+The default reconstruction script imports only the IPs required by the copied
+RTL:
+
+- `fpga/ip/IROM/IROM.xci`: Xilinx `dist_mem_gen:8.0`, configured as `IROM`.
+- `fpga/ip/DRAM/DRAM.xci`: Xilinx `dist_mem_gen:8.0`, configured as `DRAM`.
+- `fpga/ip-optional/pll_1/pll.xci`: Xilinx `clk_wiz:6.0`, configured as
+  `pll`.
+
+The default PLL source is `fpga/ip-optional/pll_1/pll.xci` because it provides
+`clk_out1`, `clk_out2`, and `locked`, matching the `pll` instance in
+`rtl/soc/top.sv`. The non-default `fpga/ip/pll/pll.xci` is retained for
+audit/reference but is not imported by default because it does not provide the
+same two-output interface.
+
+The optional `counter_0` and `counter_1` XCI files are not imported by default.
+They reference `xilinx.com:user:counter:1.0`, a custom IP definition that is
+not included in this repository and is not part of the standard Vivado catalog
+used by the default flow.
+
+The default flow has imported the selected IROM, DRAM, and PLL XCI files in
+Vivado 2023.2 during local public-preview checks. This does not settle their
+redistribution status. If these XCI files cannot be redistributed or do not
+import cleanly in a future environment, the preferred follow-up is to replace
+checked-in XCI dependency with a Tcl-only IP regeneration path and document all
+parameters.
+
 ## IP and Memory Files
 
 The checked-in XCI files are copied from the working project after checking for local path strings. They may still require manual validation in a fresh Vivado environment.
@@ -65,21 +93,6 @@ The public smoke program writes raw SEG value `0x00000037` to MMIO address
 
 If imported XCI files do not regenerate cleanly, replace the import step with explicit IP creation Tcl and document all parameters.
 
-The default reconstruction script imports only the IPs that are instantiated by the copied RTL:
-
-- `IROM`
-- `DRAM`
-- `pll`
-
-The default PLL source is `fpga/ip-optional/pll_1/pll.xci`. It still creates an IP named `pll`, but it has two clock outputs:
-
-- `clk_out1`: 50 MHz
-- `clk_out2`: 80 MHz
-
-This matches `rtl/soc/top.sv`, which connects `clk_out1`, `clk_out2`, and `locked`. The one-output `fpga/ip/pll/pll.xci` is retained for audit but is not imported by default because it does not provide the `clk_out2` port used by the top-level RTL.
-
-The repository also keeps `counter_0` and `counter_1` XCI files under `fpga/ip-optional/` for audit and future review. They are not imported by default because `counter_0`/`counter_1` reference a custom `counter (1.0)` IP definition that is not available in the standard Vivado catalog.
-
 ## PLL
 
 The original project used a PLL IP and FPGA part `xc7k325tffg900-2`. The current default reconstruction uses the two-output PLL configuration copied from the working project:
@@ -104,6 +117,7 @@ Do not commit:
 - `*.ip_user_files/`
 - `*.dcp`
 - `*.bit`
+- `*.wdb`
 - `*.rpt`
 - `*.rpx`
 - `*.log`

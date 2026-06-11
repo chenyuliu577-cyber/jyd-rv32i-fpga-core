@@ -185,6 +185,7 @@ No official performance number is included yet.
 - Private-memory XSim reached the RV32I 37/37 display, but the public repository still does not include redistributable memory images.
 - Public smoke memory is self-generated from repository-owned source and only checks a minimal reproducible path.
 - XCI files may still require manual Vivado/IP validation.
+- The checked-in Vivado `.xci` files are included for public-preview reconstruction convenience. Their source and redistribution status still require human confirmation before a formal release. Generated Vivado IP outputs are intentionally excluded.
 - CI is limited to lightweight repository hygiene and whitespace checks.
 - Some testbench comments may contain encoding artifacts inherited from the working project.
 - Licensing of XDC, XCI, testbench, and memory material must be confirmed before a public release.

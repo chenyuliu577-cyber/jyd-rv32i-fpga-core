@@ -23,6 +23,11 @@ Suggested labels: `licensing`, `documentation`, `release-blocker`
 
 ## 2. Confirm XCI redistribution and Vivado IP regeneration path
 
+Status: Partially addressed. The repository now documents the current default
+and optional Vivado XCI handling strategy. The issue remains open until the
+maintainer confirms XCI redistribution status or replaces checked-in XCI files
+with a Tcl-only IP regeneration flow.
+
 Why this matters: XCI files are checked in for reconstruction, but long-term
 public maintenance should prefer a documented regeneration path where possible.
 

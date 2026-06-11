@@ -18,6 +18,7 @@ Use this checklist before the first public GitHub release and before every later
 - [ ] If the XDC comes from a contest/course/vendor template, document the upstream source and redistribution permission.
 - [ ] If permission cannot be confirmed, replace it with a maintainer-owned constraint file or keep the repository in public preview only.
 - [ ] Confirm XCI redistribution rights, or replace XCI files with documented Tcl IP generation.
+- [ ] Confirm redistribution status of checked-in Vivado `.xci` files.
 - [ ] Confirm testbench source and redistribution rights.
 - [ ] Keep memory initialization files excluded unless explicitly authorized for redistribution.
 - [ ] Update `THIRD_PARTY_NOTICES.md` when a file category is confirmed or excluded.
@@ -29,6 +30,9 @@ Use this checklist before the first public GitHub release and before every later
 - [ ] Confirm simulation top module is `tb_top`.
 - [ ] Confirm `fpga/constraints/digital_twin.xdc` is loaded.
 - [ ] Confirm IP files are loaded or regenerated.
+- [ ] Confirm whether default IROM/DRAM/PLL IP can be regenerated from Tcl without checked-in XCI files.
+- [ ] Document or replace optional IP files under `fpga/ip-optional/`.
+- [ ] Confirm that no generated Vivado IP output products are committed.
 - [ ] Confirm memory initialization handling is documented.
 - [ ] Confirm whether verification uses private memory images or redistributable public memory images.
 
