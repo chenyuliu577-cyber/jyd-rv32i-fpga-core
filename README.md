@@ -123,6 +123,22 @@ source fpga/vivado/create_project.tcl
    private files first. Otherwise, it uses the public smoke files under
    `tests/public-memory/` when they are present.
 
+## Public Smoke Test Quickstart
+
+Use this path when you do not have private contest memory files.
+
+```powershell
+python tools/gen_public_smoke_memory.py
+vivado -mode batch -source fpga/vivado/create_project.tcl
+```
+
+When `mem/irom.coe` and `mem/dram.coe` are absent, the Vivado reconstruction
+script uses the public smoke memory under `tests/public-memory/` by default.
+The expected public smoke SEG raw marker is `0x00000037`.
+
+This marker is only a minimal public smoke-test observation. It is not an RV32I
+37/37 instruction-test result.
+
 To run the public branch directed memory instead of the default public smoke
 memory, regenerate the branch memory and explicitly select the branch profile:
 

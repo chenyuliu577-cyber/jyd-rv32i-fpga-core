@@ -73,8 +73,13 @@ python tools/gen_public_smoke_memory.py
 vivado -mode batch -source fpga/vivado/create_project.tcl
 ```
 
-Then run `tb_top` in XSim and observe the SEG/LED/counter signals. Record the
-result as public smoke verification only, not full RV32I verification.
+This is the default public-only flow when `mem/irom.coe` and `mem/dram.coe` are
+absent. In that case, `fpga/vivado/create_project.tcl` uses
+`tests/public-memory/irom.coe` and `tests/public-memory/dram.coe`.
+
+Then run `tb_top` in XSim and observe the SEG/LED/counter signals. The expected
+SEG raw marker is `0x00000037`. Record the result as public smoke verification
+only, not full RV32I verification and not RV32I 37/37.
 
 To regenerate and test the public branch directed memory:
 

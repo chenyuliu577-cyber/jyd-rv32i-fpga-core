@@ -31,6 +31,17 @@ contest-private memory files.
 The smoke program writes raw SEG value `0x00000037` to address `0x8020_0020`.
 That value is a smoke-test marker only and is not a public RV32I 37/37 result.
 
+For the public-only quickstart, run:
+
+```powershell
+python tools/gen_public_smoke_memory.py
+vivado -mode batch -source fpga/vivado/create_project.tcl
+```
+
+When private `mem/irom.coe` and `mem/dram.coe` are absent, the reconstruction
+script uses `tests/public-memory/` by default. See `docs/simulation.md` for the
+simulation workflow.
+
 ## Public Branch Directed Memory
 
 The public preview includes a self-generated RV32I branch directed memory flow.
