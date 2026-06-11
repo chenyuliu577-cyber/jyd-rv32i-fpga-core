@@ -5,6 +5,11 @@ preview issue backlog after the GitHub repository is created.
 
 ## 1. Confirm XDC licensing and board-template origin
 
+Status: Partially addressed. The repository now documents that
+`fpga/constraints/digital_twin.xdc` requires human confirmation before a formal
+release. The issue should remain open until the maintainer confirms the
+upstream source and redistribution status.
+
 Why this matters: The constraints file may originate from a board template or
 contest package. Public redistribution needs a clear licensing boundary.
 

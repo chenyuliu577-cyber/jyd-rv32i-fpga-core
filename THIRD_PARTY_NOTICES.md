@@ -14,6 +14,28 @@ This repository is an independent educational cleanup of a contest-oriented proj
 
 Any contest-provided templates, specifications, programs, or board files must be reviewed before redistribution. Documentation in this repository summarizes requirements conservatively and should not be treated as a replacement for the official contest PDF.
 
+## FPGA constraints
+
+The repository includes `fpga/constraints/digital_twin.xdc` for FPGA pin and
+timing constraints.
+
+Current status:
+
+- Source/origin: pending human confirmation.
+- Redistribution status: pending human confirmation.
+- Public preview use: included for project reconstruction convenience.
+- Formal release status: release-blocking until the file origin and
+  redistribution permission are confirmed.
+
+The current file does not contain an explicit copyright, license, source,
+vendor, contest, course, generated-file, proprietary, or confidential notice.
+It also does not contain an obvious local path, user name, or machine
+identifier. This absence is not proof of redistribution permission.
+
+Before a formal release, the maintainer should confirm whether this file is
+original project work, derived from a board vendor template, contest/course
+material, or another third-party source.
+
 ## Memory Initialization Material Note
 
 Memory initialization materials are excluded by default, including:

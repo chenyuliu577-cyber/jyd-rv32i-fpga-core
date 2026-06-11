@@ -14,7 +14,9 @@ Use this checklist before the first public GitHub release and before every later
 ## Licensing
 
 - [ ] Confirm original RTL ownership.
-- [ ] Confirm XDC source and redistribution rights.
+- [ ] Confirm the source and redistribution status of `fpga/constraints/digital_twin.xdc`.
+- [ ] If the XDC comes from a contest/course/vendor template, document the upstream source and redistribution permission.
+- [ ] If permission cannot be confirmed, replace it with a maintainer-owned constraint file or keep the repository in public preview only.
 - [ ] Confirm XCI redistribution rights, or replace XCI files with documented Tcl IP generation.
 - [ ] Confirm testbench source and redistribution rights.
 - [ ] Keep memory initialization files excluded unless explicitly authorized for redistribution.

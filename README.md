@@ -188,6 +188,7 @@ No official performance number is included yet.
 - CI is limited to lightweight repository hygiene and whitespace checks.
 - Some testbench comments may contain encoding artifacts inherited from the working project.
 - Licensing of XDC, XCI, testbench, and memory material must be confirmed before a public release.
+- The FPGA constraint file is included for public-preview reconstruction convenience, but its source and redistribution status still require human confirmation before a formal release.
 
 ## Roadmap
 
