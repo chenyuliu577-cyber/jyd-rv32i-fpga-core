@@ -120,6 +120,10 @@ Suggested labels: `verification`, `rv32i`, `branch`
 
 ## 8. Add directed load/store byte-halfword tests
 
+Status: addressed by `tests/load-store-directed/`, `tests/load-store-memory/`,
+and `tools/gen_load_store_directed_memory.py`. This is a public load/store
+directed memory flow only, not complete RV32I 37/37 verification.
+
 Why this matters: Byte and halfword sign/zero extension and write masks are
 high-risk areas in RV32I implementations.
 

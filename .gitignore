@@ -50,6 +50,9 @@ mem/*.mif
 !tests/branch-memory/
 !tests/branch-memory/irom.coe
 !tests/branch-memory/dram.coe
+!tests/load-store-memory/
+!tests/load-store-memory/irom.coe
+!tests/load-store-memory/dram.coe
 
 # Crash dumps
 hs_err_pid*

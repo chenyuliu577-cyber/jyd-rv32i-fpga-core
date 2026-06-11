@@ -90,11 +90,20 @@ Set `JYD_MEMORY_PROFILE=branch` to explicitly select
 memory files are absent. Branch directed memory is not the default public
 profile.
 
+Set `JYD_MEMORY_PROFILE=load-store` to explicitly select
+`tests/load-store-memory/irom.coe` and `tests/load-store-memory/dram.coe` when
+private memory files are absent. Load/store directed memory is not the default
+public profile.
+
 Confirm the IROM/DRAM `CONFIG.coefficient_file` paths in Vivado before
 publishing verification claims.
 
 The public smoke program writes raw SEG value `0x00000037` to MMIO address
 `0x8020_0020`. This is only a smoke marker and is not RV32I 37/37 verification.
+
+The public load/store directed program writes raw SEG value `0x0000C0DE` on
+success and `0x0000BAD0` on failure. This is only a directed load/store marker
+and is not RV32I 37/37 verification.
 
 If imported XCI files do not regenerate cleanly, replace the import step with explicit IP creation Tcl and document all parameters.
 

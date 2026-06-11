@@ -13,6 +13,7 @@ This is an independent educational cleanup of a contest-oriented project. It is 
 - Verification status: a private-memory XSim record observes the RV32I 37/37 display. The memory images are not included, so this is not a public no-memory reproduction artifact.
 - Public smoke status: repository-owned public smoke memory images are included under `tests/public-memory/`. They are generated from `tools/gen_public_smoke_memory.py` and do not claim RV32I 37/37 coverage.
 - Branch directed status: repository-owned branch directed memory images are generated under `tests/branch-memory/` by `tools/gen_branch_directed_memory.py`. They require explicit `JYD_MEMORY_PROFILE=branch` selection and do not claim RV32I 37/37 coverage.
+- Load/store directed status: repository-owned load/store directed memory images are generated under `tests/load-store-memory/` by `tools/gen_load_store_directed_memory.py`. They require explicit `JYD_MEMORY_PROFILE=load-store` selection and do not claim RV32I 37/37 coverage.
 - Project maturity: early-stage educational release, not an industrial-grade or fully verified core.
 
 This project does not claim RV32IM support, full formal verification, production readiness, external user adoption, CI coverage beyond lightweight repository hygiene checks, releases, stars, or benchmark leadership.
@@ -29,6 +30,11 @@ The repository also includes a public self-generated branch directed memory
 image. It expects success SEG raw value `0x0000BEEF` and failure SEG raw value
 `0x0000BAD0`. This directed test is limited to basic branch behavior and is not
 complete RV32I verification.
+
+The repository also includes a public self-generated load/store directed memory
+image. It expects success SEG raw value `0x0000C0DE` and failure SEG raw value
+`0x0000BAD0`. This directed test is limited to basic load/store byte, halfword,
+and word behavior and is not complete RV32I verification.
 
 ## Contest Specification Summary
 
@@ -73,6 +79,8 @@ tests/public-smoke/ public RV32I smoke-test source
 tests/public-memory/ generated public smoke-test COE files
 tests/branch-directed/ public RV32I branch-directed source
 tests/branch-memory/ generated branch-directed COE files
+tests/load-store-directed/ public RV32I load/store directed source
+tests/load-store-memory/ generated load/store directed COE files
 tools/             repository utility scripts
 ```
 
@@ -115,6 +123,16 @@ $env:JYD_MEMORY_PROFILE = "branch"
 vivado -mode batch -source fpga/vivado/create_project.tcl
 ```
 
+To run the public load/store directed memory instead of the default public smoke
+memory, regenerate the load/store memory and explicitly select the load-store
+profile:
+
+```powershell
+python tools/gen_load_store_directed_memory.py
+$env:JYD_MEMORY_PROFILE = "load-store"
+vivado -mode batch -source fpga/vivado/create_project.tcl
+```
+
 ## CI Scope
 
 This repository includes a lightweight GitHub Actions workflow for repository hygiene checks.
@@ -147,8 +165,10 @@ The reconstruction script prefers private `mem/irom.coe` and `mem/dram.coe`
 files when they are present. If those private files are absent, it uses the
 public smoke memory images under `tests/public-memory/` by default. Set
 `JYD_MEMORY_PROFILE=branch` to explicitly use public branch directed memory
-under `tests/branch-memory/`. If the selected source is unavailable, it warns
-that simulation may not run meaningful CPU code.
+under `tests/branch-memory/`, or `JYD_MEMORY_PROFILE=load-store` to explicitly
+use public load/store directed memory under `tests/load-store-memory/`. If the
+selected source is unavailable, it warns that simulation may not run meaningful
+CPU code.
 
 ## Simulation
 
@@ -173,7 +193,9 @@ The repository includes a private-memory XSim verification record observing
 memory images are excluded from Git. The public smoke memory writes raw value
 `0x00000037` to SEG as a minimal path marker only; it is not an RV32I 37/37
 result. The public branch directed memory writes `0x0000BEEF` on success and
-`0x0000BAD0` on failure for directed branch cases only. See
+`0x0000BAD0` on failure for directed branch cases only. The public load/store
+directed memory writes `0x0000C0DE` on success and `0x0000BAD0` on failure for
+directed load/store cases only. See
 `docs/verification.md` and `docs/verification-record-template.md` for the
 evidence format.
 
@@ -211,6 +233,7 @@ No official performance number is included yet.
 - Private-memory XSim reached the RV32I 37/37 display, but the public repository still does not include redistributable memory images.
 - Public smoke memory is self-generated from repository-owned source and only checks a minimal reproducible path.
 - Public branch directed memory is self-generated from repository-owned source and only checks selected branch cases.
+- Public load/store directed memory is self-generated from repository-owned source and only checks selected load/store cases.
 - XCI files may still require manual Vivado/IP validation.
 - The checked-in Vivado `.xci` files are included for public-preview reconstruction convenience. Their source and redistribution status still require human confirmation before a formal release. Generated Vivado IP outputs are intentionally excluded.
 - CI is limited to lightweight repository hygiene and whitespace checks.

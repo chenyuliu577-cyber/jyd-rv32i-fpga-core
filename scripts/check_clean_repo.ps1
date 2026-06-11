@@ -53,7 +53,9 @@ $allowlistedMemoryFiles = New-Object System.Collections.Generic.HashSet[string](
     "tests/public-memory/IROM.mif",
     "tests/public-memory/DRAM.mif",
     "tests/branch-memory/irom.coe",
-    "tests/branch-memory/dram.coe"
+    "tests/branch-memory/dram.coe",
+    "tests/load-store-memory/irom.coe",
+    "tests/load-store-memory/dram.coe"
 ) | ForEach-Object { $allowlistedMemoryFiles.Add($_) | Out-Null }
 
 Get-ChildItem -Path $repo.Path -Recurse -File -Force |
