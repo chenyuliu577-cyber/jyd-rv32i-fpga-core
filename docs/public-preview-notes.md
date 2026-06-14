@@ -15,6 +15,10 @@ This repository is ready for a public preview, not a formal stable release.
 - No public performance number is claimed yet.
 - No Codex for Open Source application should be submitted yet.
 
+See [test-profiles.md](test-profiles.md) for the public smoke,
+branch-directed, load/store-directed, and private contest-memory profile
+selection rules.
+
 This preview is intended to let readers inspect the cleaned RTL, Vivado
 reconstruction flow, documentation, and private-memory verification summary.
 It must not be described as a stable release or as a complete public 37/37

@@ -45,6 +45,10 @@ image. It expects success SEG raw value `0x0000C0DE` and failure SEG raw value
 `0x0000BAD0`. This directed test is limited to basic load/store byte, halfword,
 and word behavior and is not complete RV32I verification.
 
+See [docs/test-profiles.md](docs/test-profiles.md) for the public smoke,
+branch-directed, load/store-directed, and private contest-memory profile
+selection rules.
+
 ## Contest Specification Summary
 
 The referenced JYD contest requirements target the RV32I base integer ISA. The contest instruction test covers 37 instructions. `fence`, `ebreak`, and `ecall` are not tested by the contest and may be implemented as no-ops or documented as reserved behavior.
@@ -138,6 +142,9 @@ The expected public smoke SEG raw marker is `0x00000037`.
 
 This marker is only a minimal public smoke-test observation. It is not an RV32I
 37/37 instruction-test result.
+
+For the full memory selection priority across all public and private profiles,
+see [docs/test-profiles.md](docs/test-profiles.md).
 
 To run the public branch directed memory instead of the default public smoke
 memory, regenerate the branch memory and explicitly select the branch profile:

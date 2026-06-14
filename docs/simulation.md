@@ -50,6 +50,9 @@ is a raw write of `0x0000C0DE` to SEG address `0x8020_0020` and `0x00000001` to
 LED address `0x8020_0040`. A failure path writes SEG raw value `0x0000BAD0` and
 LED raw value `0x000000EE`. This directed test is not full RV32I verification.
 
+See [test-profiles.md](test-profiles.md) for the full public/private memory
+profile selection priority.
+
 ## Memory Initialization
 
 The cleanup excludes private contest memory initialization files. Add
