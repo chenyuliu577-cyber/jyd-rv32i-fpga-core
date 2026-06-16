@@ -6,6 +6,9 @@ This repository is an early-stage, educational, competition-oriented cleanup of 
 
 This is an independent educational cleanup of a contest-oriented project. It is not an official JYD repository unless explicitly stated.
 
+New to FPGA, Vivado, or this repository? Start with
+[docs/getting-started.md](docs/getting-started.md).
+
 ## Current Status
 
 - Scope: RV32I contest-oriented CPU/SoC for FPGA.

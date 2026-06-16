@@ -2,6 +2,9 @@
 
 This repository is ready for a public preview, not a formal stable release.
 
+First-time FPGA, Vivado, or repository users should start with
+[getting-started.md](getting-started.md).
+
 - Clean repository reconstruction has been tested with Vivado 2023.2.
 - XSim private-memory verification observed `seg_wdata = 32'h37000000`.
 - Public smoke memory images are included under `tests/public-memory/`.
